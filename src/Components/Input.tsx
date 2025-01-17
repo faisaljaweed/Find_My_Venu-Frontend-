@@ -24,7 +24,9 @@ const Input: FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={className}
+        className={`px-4 py-2 mt-2 border-2 border-gray-300 rounded  hover:border-blue-500  ${
+          className || ""
+        }`}
         {...props}
       />
     </div>

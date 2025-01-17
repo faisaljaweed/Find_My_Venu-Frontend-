@@ -2,15 +2,15 @@ import { FC } from "react";
 
 type ButtonProps = {
   children: string;
-  oncClick?: () => void;
+  onClick?: () => void;
   className?: string;
 };
-const Button: FC<ButtonProps> = ({ children, oncClick, className }) => {
+const Button: FC<ButtonProps> = ({ children, onClick, className }) => {
   return (
     <div>
       <button
-        onClick={oncClick}
-        className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ${
+        onClick={onClick}
+        className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-2 ${
           className || ""
         }`}
       >
