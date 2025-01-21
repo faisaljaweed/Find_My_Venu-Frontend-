@@ -9,7 +9,7 @@ const Logout = () => {
         console.log(res);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => console.log(err));
   };

@@ -7,6 +7,7 @@ type InputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  required?: boolean;
 };
 
 const Input: FC<InputProps> = ({
@@ -15,6 +16,7 @@ const Input: FC<InputProps> = ({
   value,
   onChange,
   className = "",
+  required,
   ...props
 }) => {
   return (
@@ -27,6 +29,7 @@ const Input: FC<InputProps> = ({
         className={`px-4 py-2 mt-2 border-2 border-gray-300 rounded  hover:border-blue-500  ${
           className || ""
         }`}
+        required={required}
         {...props}
       />
     </div>

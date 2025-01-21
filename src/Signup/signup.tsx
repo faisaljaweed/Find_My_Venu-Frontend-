@@ -2,6 +2,8 @@ import { useState } from "react";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import { Signup_api } from "../Components/api/User_Api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [username, setUserName] = useState("");
@@ -9,6 +11,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setUserName("");
@@ -25,48 +28,81 @@ const Signup = () => {
     Signup_api(userData)
       .then((res) => {
         console.log(res);
+        if (res?.status === 200) {
+          navigate("/login");
+          toast.success("Signup Successfull");
+        }
       })
       .catch((err) => console.log(err));
+    toast.error("Signup Failed");
   };
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Enter Your UserName"
-          value={username}
-          onChange={(e) => {
-            setUserName(e.target.value);
-          }}
-        />
-        <Input
-          type="email"
-          placeholder="Enter Your Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <Input
-          type="password"
-          placeholder="Enter Your Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <Input
-          type="password"
-          placeholder="Enter Your ConfirmPassword"
-          value={confirmPassword}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-          }}
-        />
-
-        <Button>Signup</Button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+      >
+        <h2 className="text-2xl font-bold text-center mb-6">Signup</h2>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Username
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Your Username"
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Your Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Signup
+        </button>
       </form>
-    </>
+    </div>
   );
 };
 

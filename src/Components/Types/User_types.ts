@@ -1,11 +1,11 @@
 //create a User type
 export type Signup_Types = {
-  _id: string;
+  _id?: string;
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
-  role: string;
+  role?: string;
 };
 
 export type Login_Types = {

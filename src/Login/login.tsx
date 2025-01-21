@@ -5,6 +5,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Login_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,49 +39,73 @@ const Login = () => {
 
         if (role === "admin") {
           navigate("/admin_dashboard");
+          toast.success("Login Successfull Admin Dashboard");
         } else if (role === "vendor") {
           navigate("/vendor_dashboard");
+          toast.success("Login Successfull Vendor Dashboard");
         } else if (role === "client") {
           navigate("/client_dashboard");
+          toast.success("Login Successfull Client Dashboard");
         } else {
-          navigate("/");
+          navigate("/login");
+          toast.error("Invalid Credentials");
         }
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Enter your Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            console.log(e.target.value);
-          }}
-          className=""
-        />
-        <Input
-          type={showPassword ? "text" : "password"}
-          placeholder="Enter your Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            console.log(e.target.value);
-          }}
-          className=""
-        />
-        {showPassword ? (
-          <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
-        ) : (
-          <VisibilityOffIcon onClick={() => setShowPassword(!showPassword)} />
-        )}
-        <Button>Login</Button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-16 rounded-lg shadow-md w-full max-w-md relative"
+      >
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <div className="mb-4">
+          <Input
+            type="email"
+            placeholder="Enter your Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              console.log(e.target.value);
+            }}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-4 relative">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              console.log(e.target.value);
+            }}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <div className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
+            {showPassword ? (
+              <VisibilityIcon onClick={() => setShowPassword(!showPassword)} />
+            ) : (
+              <VisibilityOffIcon
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
+          </div>
+        </div>
+        <Button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+          Login
+        </Button>
+        <div className="absolute right-2">
+          <button className="font-medium" onClick={() => navigate("/signup")}>
+            Signup
+          </button>
+        </div>
       </form>
-      <Button>Signup</Button>
-    </>
+    </div>
   );
 };
 

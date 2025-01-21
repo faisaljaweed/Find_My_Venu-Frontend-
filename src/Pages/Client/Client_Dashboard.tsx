@@ -1,10 +1,9 @@
-import Logout from "../../Logout/logout";
+import FirstSection from "./firstSection";
 
 const Client_Dashboard = () => {
   return (
-    <div className="flex justify-between">
-      <h1>Client Dashboard</h1>
-      <Logout />
+    <div>
+      <FirstSection />
     </div>
   );
 };
