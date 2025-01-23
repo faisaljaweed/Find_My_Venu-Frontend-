@@ -45,3 +45,14 @@ export const LogOut_api = async () => {
     console.log("Logout Token", error);
   }
 };
+
+export const verifyEmailApi = async (emailToken: string) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/user/verify-email/${emailToken}`
+    );
+    return response;
+  } catch (error) {
+    console.log("Verify Email Error", error);
+  }
+};

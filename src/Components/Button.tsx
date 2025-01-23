@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 type ButtonProps = {
-  children: string;
+  children: any;
   onClick?: () => void;
   className?: string;
   type?: "submit" | "reset" | "button";

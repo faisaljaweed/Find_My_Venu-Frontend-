@@ -36,15 +36,24 @@ const Login = () => {
         if (refreshToken) {
           localStorage.setItem("refreshToken", refreshToken);
         }
-
-        if (role === "admin") {
+        const emailToken = res?.data?.data?.loggedInUser.emailToken;
+        console.log(`Email Token is ${emailToken}`);
+        if (emailToken) {
+          localStorage.setItem("emailToken", emailToken);
+        }
+        const isVerified = res?.data?.data?.loggedInUser.isVerified;
+        console.log(`isVerified is ${isVerified}`);
+        if (isVerified === false) {
+          navigate("/verify-email");
+          toast.error("Email Not Verified");
+        } else if (role === "admin") {
           navigate("/admin_dashboard");
           toast.success("Login Successfull Admin Dashboard");
         } else if (role === "vendor") {
           navigate("/vendor_dashboard");
           toast.success("Login Successfull Vendor Dashboard");
         } else if (role === "client") {
-          navigate("/client_dashboard");
+          navigate("/");
           toast.success("Login Successfull Client Dashboard");
         } else {
           navigate("/login");

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../Components/Input";
-import Button from "../Components/Button";
+// import Input from "../Components/Input";
+// import Button from "../Components/Button";
 import { Signup_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,9 +27,14 @@ const Signup = () => {
     };
     Signup_api(userData)
       .then((res) => {
+        const emailToken = res?.data?.data?.loggedInUser.emailToken;
+        console.log(`Email Token is ${emailToken}`);
+        if (emailToken) {
+          localStorage.setItem("emailToken", emailToken);
+        }
         console.log(res);
         if (res?.status === 200) {
-          navigate("/login");
+          navigate("/verify-email");
           toast.success("Signup Successfull");
         }
       })

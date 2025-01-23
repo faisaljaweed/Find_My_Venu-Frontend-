@@ -1,9 +1,9 @@
-import FirstSection from "./firstSection";
+import Header from "../../Components/Header";
 
 const Client_Dashboard = () => {
   return (
     <div>
-      <FirstSection />
+      <Header />
     </div>
   );
 };
