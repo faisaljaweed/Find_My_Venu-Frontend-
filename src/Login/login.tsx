@@ -6,6 +6,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Login_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -108,9 +109,18 @@ const Login = () => {
         <Button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
           Login
         </Button>
-        <div className="absolute right-2">
-          <button className="font-medium" onClick={() => navigate("/signup")}>
+        <div className="flex justify-between items-center mt-4">
+          <button
+            className="text-blue-500 hover:underline font-medium"
+            onClick={() => navigate("/signup")}
+          >
             Signup
+          </button>
+          <button
+            className="text-blue-500 hover:underline font-medium"
+            onClick={() => navigate("/forgot-password")}
+          >
+            Forgot Password?
           </button>
         </div>
       </form>

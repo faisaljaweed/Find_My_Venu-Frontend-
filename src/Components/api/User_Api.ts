@@ -56,3 +56,33 @@ export const verifyEmailApi = async (emailToken: string) => {
     console.log("Verify Email Error", error);
   }
 };
+
+export const forgotPasswordApi = async (email: string) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/user/forgot-password`,
+      email
+    );
+    return response;
+  } catch (error) {
+    console.log("Forgot Password Error", error);
+  }
+};
+
+export const resetPasswordApi = async (
+  newPassword: string,
+  confirmPassword: string
+) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/user//reset-password/`,
+      {
+        newPassword,
+        confirmPassword,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Reset Password Error", error);
+  }
+};
