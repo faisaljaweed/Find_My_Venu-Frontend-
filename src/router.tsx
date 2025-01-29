@@ -16,7 +16,7 @@ import Home from "./Pages/Client/Home";
 import Reset_Password from "./Login/Reset_Password";
 import ForgotPassword from "./Login/forgot_password";
 import Home_all_product from "./Pages/Client/Home_all_product";
-// import Detail_all_product from "./Pages/Client/Detail_all_product";
+import Detail_all_product from "./Pages/Client/Detail_all_product";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,13 +25,13 @@ const router = createBrowserRouter(
       <Route path="/" element={<Client_Dashboard />}>
         <Route path="/" element={<Home />} />
         <Route path="luxury-villa" element={<Home_all_product />} />
-        {/* <Route path="luxury-villa/:_id" element={<Detail_all_product />} /> */}
+        <Route path="luxury-villa/:id" element={<Detail_all_product />} />
 
         {/* <Route path="banquet-hotel" element={<Home_all_product />} />
         <Route path="farm-house" element={<Home_all_product />} /> */}
 
-        <Route path="about" element={<h1>About Us</h1>} />
-        <Route path="contact" element={<h1>Contact Us</h1>} />
+        {/* <Route path="about" element={<h1>About Us</h1>} />
+        <Route path="contact" element={<h1>Contact Us</h1>} /> */}
       </Route>
       {/* end Client Routes */}
       {/* Start Admin Routes */}

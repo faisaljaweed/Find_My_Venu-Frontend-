@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../Components/api/Product_Api";
 import { Product } from "../../Components/Types/Product_types";
 import Button from "../../Components/Button";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home_all_product = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  // const Navigate = useNavigate();
+  const Navigate = useNavigate();
   useEffect(() => {
     getAllProducts()
       .then((res) => {
@@ -44,7 +44,7 @@ const Home_all_product = () => {
               </p>
               <Button
                 onClick={() => {
-                  // Navigate(`/luxury-villa/${product._id}`);
+                  Navigate(`/luxury-villa/${product._id}`);
                 }}
               >
                 Book Now

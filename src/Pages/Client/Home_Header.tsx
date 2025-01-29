@@ -4,13 +4,16 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import { NavLink } from "react-router-dom";
-
+import bg from "../../images/booking.jpg";
 const Home_Header = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
+    <div
+      className=" bg-cover bg-center bg-gray-100 min-h-screen p-6"
+      style={{ backgroundImage: `url(${bg}) ` }}
+    >
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800">

@@ -14,7 +14,7 @@ export const getAllProducts = async () => {
 export const getDetailProduct = async (id: string) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/property/get-product${id}`
+      `http://localhost:3000/api/v1/property/get-product/${id}`
     );
     return response;
   } catch (error) {
