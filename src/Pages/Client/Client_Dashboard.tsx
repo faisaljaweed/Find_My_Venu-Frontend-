@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
 
 const Client_Dashboard = () => {
   return (
@@ -12,6 +13,9 @@ const Client_Dashboard = () => {
       </div>
       <div>
         <Outlet />
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );

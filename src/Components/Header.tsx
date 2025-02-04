@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import Logout from "../Logout/logout";
-
+import "./Header.css";
 const Header = () => {
   const [isLogin, setLogin] = useState(true);
   const navigate = useNavigate();
@@ -24,14 +24,16 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <div className="flex justify-between px-20">
+    <div className="flex justify-between px-20 py-5 " id="header">
       <Logo />
       {isLogin ? (
         <span className="" onClick={handleLogout}>
           <Logout />
         </span>
       ) : (
-        <Button onClick={handleLogin}>Login</Button>
+        <Button className="bg-white " onClick={handleLogin}>
+          <span className="text-black font-bold">Login</span>
+        </Button>
       )}
     </div>
   );

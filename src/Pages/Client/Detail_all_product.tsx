@@ -1,14 +1,86 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDetailProduct } from "../../Components/api/Product_Api";
 import { Product } from "../../Components/Types/Product_types";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import the styles
+import "react-datepicker/dist/react-datepicker.css";
+import { Bookig_add_api } from "../../Components/api/Booking_Api";
+import axios from "axios";
 
 const Detail_all_product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null); // Date state for the selected date
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  // const [hasActiveBooking, setHasActiveBooking] = useState(false);
+  const [bookedDates, setBookedDates] = useState<Date[]>([]); // Track booked dates
+  const [userBookedProducts, setUserBookedProducts] = useState<string[]>([]); // Store user booked products
+  const [bookingStatus, setBookingStatus] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        let accessToken = localStorage.getItem("accessToken");
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/booking/get-user-booking",
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+
+        const currentDate = new Date();
+        const activeBooking = response.data.data.find(
+          (booking: any) =>
+            new Date(booking.bookingDate) >= currentDate &&
+            booking.productId === id
+        );
+
+        if (activeBooking) {
+          setBookingStatus(activeBooking.status); // Set booking status
+        }
+
+        const bookedDatesArray = response.data.data
+          .filter((booking: any) => booking.productId === id)
+          .map((booking: any) => new Date(booking.bookingDate));
+
+        const bookedProducts = response.data.data.map(
+          (booking: any) => booking.productId
+        );
+
+        setBookedDates(bookedDatesArray);
+        setUserBookedProducts(bookedProducts);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
+
+    fetchBookings();
+  }, [id]);
+
+  // useEffect(() => {
+  //   const fetchBookings = async () => {
+  //     try {
+  //       let accessToken = localStorage.getItem("accessToken");
+  //       const response = await axios.get(
+  //         "http://localhost:3000/api/v1/booking/get-user-booking",
+  //         {
+  //           headers: { Authorization: `Bearer ${accessToken}` },
+  //         }
+  //       );
+
+  //       // ✅ Sab users ki bookings check karna hai sirf is product ke liye
+  //       const bookedDatesArray = response.data.data
+  //         .filter((booking: any) => booking.productId === id)
+  //         .map((booking: any) => new Date(booking.bookingDate));
+
+  //       setBookedDates(bookedDatesArray);
+  //     } catch (error) {
+  //       console.error("Error fetching bookings:", error);
+  //     }
+  //   };
+
+  //   fetchBookings();
+  // }, [id]);
 
   useEffect(() => {
     if (id) {
@@ -22,17 +94,21 @@ const Detail_all_product = () => {
     }
   }, [id]);
 
-  // Function to handle booking action
-  const handleBooking = () => {
-    if (startDate && product) {
-      alert(
-        `You have booked the product "${
-          product.name
-        }" for ${startDate.toLocaleDateString()}`
-      );
-      // You can add further logic to save the booking details
+  const addBooking = () => {
+    if (startDate && id) {
+      const bookingDate = startDate.toISOString();
+      Bookig_add_api(bookingDate, id)
+        .then((res) => {
+          console.log(res);
+          navigate(`/luxury-villa/${id}/booking-update`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      alert("Please select a booking date.");
+      console.log(
+        "Please select a booking date and ensure productId is available."
+      );
     }
   };
 
@@ -42,16 +118,14 @@ const Detail_all_product = () => {
 
       {product ? (
         <div>
-          {/* Main Image */}
           <div className="flex justify-center mb-6">
             <img
-              src={product.pics[0]} // Assuming the first image is the main one
+              src={product.pics[0]}
               alt={product.name}
               className="w-full max-w-xl h-auto rounded-lg shadow-lg"
             />
           </div>
 
-          {/* Additional Images */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             {product.pics.slice(1).map((image, index) => (
               <img
@@ -63,7 +137,6 @@ const Detail_all_product = () => {
             ))}
           </div>
 
-          {/* Product Details */}
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">{product.name}</h2>
             <p className="text-gray-700">{product.description}</p>
@@ -91,7 +164,6 @@ const Detail_all_product = () => {
             </div>
           </div>
 
-          {/* Booking Date Picker */}
           <div className="mt-6">
             <label
               htmlFor="booking-date"
@@ -104,21 +176,54 @@ const Detail_all_product = () => {
               onChange={(date: Date | null) => setStartDate(date)}
               selectsStart
               startDate={startDate}
-              endDate={startDate} // You can adjust endDate logic if needed
+              endDate={startDate}
               placeholderText="Start Date"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              minDate={new Date()} // Disable past dates
+              minDate={new Date()}
+              excludeDates={bookedDates} // Disable booked dates
             />
+            {/* <DatePicker
+              selected={startDate}
+              onChange={(date: Date | null) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={startDate}
+              placeholderText="Start Date"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              minDate={new Date()}
+              excludeDates={bookedDates} // ✅ Disable already booked dates
+            /> */}
           </div>
 
-          {/* Book Now Button */}
           <div className="mt-6 flex justify-center">
-            <button
-              onClick={handleBooking}
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition"
-            >
-              Book Now
-            </button>
+            {bookingStatus ? (
+              <p className="text-lg font-semibold">
+                Booking Status:{" "}
+                <span
+                  className={`${
+                    bookingStatus === "pending"
+                      ? "text-yellow-500"
+                      : bookingStatus === "approved"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {bookingStatus.toUpperCase()}
+                </span>
+              </p>
+            ) : (
+              <button
+                onClick={addBooking}
+                disabled={userBookedProducts.includes(id as string)}
+                className={`px-6 py-3 ${
+                  userBookedProducts.includes(id as string)
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                } text-white font-semibold rounded-lg shadow-lg transition`}
+              >
+                Book Now
+              </button>
+            )}
           </div>
         </div>
       ) : (

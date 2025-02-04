@@ -4,7 +4,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import { NavLink } from "react-router-dom";
-import bg from "../../images/booking.jpg";
+import bg from "../../images/pool-relaxation-sea-scene-nature.jpg";
 const Home_Header = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -16,9 +16,7 @@ const Home_Header = () => {
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-          Where to?
-        </h1>
+        <h1 className="text-4xl md:text-4xl font-bold text-white">Where to?</h1>
       </div>
 
       {/* Search Bar */}

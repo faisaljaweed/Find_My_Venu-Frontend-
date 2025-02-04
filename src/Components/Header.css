@@ -1,0 +1,12 @@
+#header {
+  /* background: rgb(191, 7, 7);
+  background: linear-gradient(
+    90deg,
+    rgba(191, 7, 7, 1) 0%,
+    rgba(5, 1, 1, 1) 50%,
+    rgba(191, 7, 7, 1) 100%
+  ); */
+
+  /* background: linear-gradient(to right, red, black, red); */
+  background-color: #1e3a8a;
+}
