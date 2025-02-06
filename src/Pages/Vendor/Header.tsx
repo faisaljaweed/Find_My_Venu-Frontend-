@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
-import Button from "./Button";
+import Logo from "../../Components/Logo";
+import Button from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
-import Logout from "../Logout/logout";
-import "./Header.css";
+import Logout from "../../Logout/logout";
+import "../../Components/Header.css";
 const Header = () => {
   const [isLogin, setLogin] = useState(true);
   const navigate = useNavigate();

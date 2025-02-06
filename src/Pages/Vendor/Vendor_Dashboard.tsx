@@ -1,13 +1,11 @@
-import { NavLink, Outlet } from "react-router-dom";
-import Logout from "../../Logout/logout";
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
 
 const Vendor_Dashboard = () => {
   return (
     <>
-      <div className="flex justify-between">
-        <h1> Vendor Dashboard</h1>
-        <Logout />
-        <NavLink to="/vendor_dashboard/add_product">Add Product</NavLink>
+      <div>
+        <Header />
       </div>
       <div>
         <Outlet />
