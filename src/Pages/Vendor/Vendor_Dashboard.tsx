@@ -1,16 +1,30 @@
+// import { Outlet } from "react-router-dom";
+// import Sidebar from "./Sidebar";
+
+// const Vendor_Dashboard = () => {
+//   return (
+//     <div className="flex">
+//       <Sidebar />
+//       <main className="w-full">
+//         <Outlet />
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default Vendor_Dashboard;
+
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const Vendor_Dashboard = () => {
   return (
-    <>
-      <div>
-        <Header />
-      </div>
-      <div>
+    <div className="flex flex-col md:flex-row h-screen">
+      <Sidebar />
+      <main className="w-full md:flex-1 p-4">
         <Outlet />
-      </div>
-    </>
+      </main>
+    </div>
   );
 };
 

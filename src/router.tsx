@@ -18,6 +18,7 @@ import ForgotPassword from "./Login/forgot_password";
 import Home_all_product from "./Pages/Client/Home_all_product";
 import Detail_all_product from "./Pages/Client/Detail_all_product";
 import Booking_update from "./Pages/Client/Booking_update";
+import Protected_Routes from "./Protected_Routes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,15 +35,21 @@ const router = createBrowserRouter(
       </Route>
       {/* end Client Routes */}
       {/* Start Admin Routes */}
-      <Route path="/admin_dashboard" element={<Admin_Dashboard />}>
-        <Route path="add_vendor" element={<Add_Vendor />} />
+      <Route element={<Protected_Routes role="admin" />}>
+        <Route path="/admin_dashboard" element={<Admin_Dashboard />}>
+          <Route path="add_vendor" element={<Add_Vendor />} />
+        </Route>
       </Route>
       {/* end Admin Routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       {/* Start Vendor Routes */}
-      <Route path="/vendor_dashboard" element={<Vendor_Dashboard />}>
-        <Route path="add_product" element={<Add_Product />} />
+      <Route element={<Protected_Routes role="vendor" />}>
+        <Route path="/vendor_dashboard" element={<Vendor_Dashboard />}>
+          <Route path="add_product" element={<Add_Product />} />
+          <Route path="check_booking" element={<h1>Check Booking</h1>} />
+          <Route path="booking_details" element={<h1>Booking Details</h1>} />
+        </Route>
       </Route>
       {/* end Vendor Routes */}
       <Route path="/verify-email" element={<Verify_Email />} />

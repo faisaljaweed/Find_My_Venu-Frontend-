@@ -26,6 +26,8 @@ const Login = () => {
         const role = res?.data?.data?.loggedInUser.role;
         console.log(`Role is ${role}`);
 
+        localStorage.setItem("role", role);
+
         const accessToken = res?.data?.data?.accessToken;
 
         if (accessToken) {

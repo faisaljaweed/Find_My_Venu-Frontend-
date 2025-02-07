@@ -8,3 +8,13 @@ export type Product = {
   available: boolean;
   pics: string[];
 };
+
+export type AddProduct = {
+  name: String;
+  description: String;
+  location: String;
+  type?: String;
+  price: String;
+  date: Date;
+  pics: File[];
+};
