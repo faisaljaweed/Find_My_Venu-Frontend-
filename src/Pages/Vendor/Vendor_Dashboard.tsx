@@ -1,19 +1,3 @@
-// import { Outlet } from "react-router-dom";
-// import Sidebar from "./Sidebar";
-
-// const Vendor_Dashboard = () => {
-//   return (
-//     <div className="flex">
-//       <Sidebar />
-//       <main className="w-full">
-//         <Outlet />
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default Vendor_Dashboard;
-
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 

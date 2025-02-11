@@ -9,12 +9,4 @@ export type Product = {
   pics: string[];
 };
 
-export type AddProduct = {
-  name: String;
-  description: String;
-  location: String;
-  type?: String;
-  price: String;
-  date: Date;
-  pics: File[];
-};
+export type AddProduct = FormData;

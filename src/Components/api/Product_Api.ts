@@ -13,9 +13,15 @@ export const getAllProducts = async () => {
 };
 
 export const getDetailProduct = async (id: string) => {
+  const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/property/get-product/${id}`
+      `http://localhost:3000/api/v1/property/get-product/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response;
   } catch (error) {
@@ -25,12 +31,56 @@ export const getDetailProduct = async (id: string) => {
 
 export const addProduct = (productData: AddProduct) => {
   try {
+    const token = localStorage.getItem("accessToken");
+    console.log("Token", token);
     const response = axios.post(
       "http://localhost:3000/api/v1/property/add-product",
-      productData
+      productData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "content-type": "multipart/form-data",
+        },
+      }
     );
     return response;
   } catch (error) {
     console.log("Error in Add Product", error);
+  }
+};
+
+export const getProductById = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    // console.log("Access Token", token);
+    const response = await axios.get(
+      // `http://localhost:3000/api/v1/property/get-product/${productId}`,
+      `http://localhost:3000/api/v1/property/get-product`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export const DeleteProduct = async (productId: string) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.delete(
+      `http://localhost:3000/api/v1/property/delete-product/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Error", error);
   }
 };

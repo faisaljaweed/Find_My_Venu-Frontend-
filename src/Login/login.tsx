@@ -23,6 +23,9 @@ const Login = () => {
       .then((res) => {
         console.log(res);
 
+        const user = res?.data?.data?.loggedInUser;
+        localStorage.setItem("user", JSON.stringify(user));
+
         const role = res?.data?.data?.loggedInUser.role;
         console.log(`Role is ${role}`);
 

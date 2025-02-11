@@ -19,6 +19,9 @@ import Home_all_product from "./Pages/Client/Home_all_product";
 import Detail_all_product from "./Pages/Client/Detail_all_product";
 import Booking_update from "./Pages/Client/Booking_update";
 import Protected_Routes from "./Protected_Routes";
+import Booking_Detail from "./Pages/Vendor/Booking";
+import Check_Booking from "./Pages/Vendor/Check_Booking";
+import BookingResponse from "./Pages/Vendor/Booking_response";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,8 +50,9 @@ const router = createBrowserRouter(
       <Route element={<Protected_Routes role="vendor" />}>
         <Route path="/vendor_dashboard" element={<Vendor_Dashboard />}>
           <Route path="add_product" element={<Add_Product />} />
-          <Route path="check_booking" element={<h1>Check Booking</h1>} />
-          <Route path="booking_details" element={<h1>Booking Details</h1>} />
+          <Route path="check_booking" element={<Check_Booking />} />
+          <Route path="booking_details" element={<Booking_Detail />} />
+          <Route path="booking-response" element={<BookingResponse />} />
         </Route>
       </Route>
       {/* end Vendor Routes */}
