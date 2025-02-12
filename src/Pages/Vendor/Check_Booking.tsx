@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Box } from "@mui/material";
 import axios from "axios";
-import { Bookig_add_api } from "../../Components/api/Booking_Api";
 
 // Client aur Product ke details ke liye interfaces
 interface Client {
@@ -103,28 +102,12 @@ const Check_Booking: React.FC = () => {
     }
   };
 
-  //   const addBooking = async () => {
-  //     Bookig_add_api()
-  //       .then((res) => {})
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
   return (
     <Box p={2}>
       <h1 style={{ textAlign: "center", marginBottom: "16px" }}>
         Check Booking
       </h1>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          // Add booking logic here
-        }}
-      >
-        Add Booking
-      </Button>
+
       <Box mt={2} sx={{ overflowX: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>

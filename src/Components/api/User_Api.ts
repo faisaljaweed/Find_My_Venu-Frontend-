@@ -1,5 +1,5 @@
-import axios from "axios";
-import { Login_Types, Signup_Types } from "../Types/User_types";
+import axios, { AxiosResponse } from "axios";
+import { Login_Types, Signup_Types, User } from "../Types/User_types";
 
 export const Login_api = async (userData: Login_Types) => {
   try {
@@ -84,5 +84,45 @@ export const resetPasswordApi = async (
     return response;
   } catch (error) {
     console.log("Reset Password Error", error);
+  }
+};
+
+// User_Api.ts
+
+// Get User API function
+export const getUser = async (): Promise<AxiosResponse<{ data: User[] }>> => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/user/get-user`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Something went wrong", error);
+    throw error;
+  }
+};
+
+// Delete User API function
+export const DeleteUser = async (id: string): Promise<AxiosResponse<any>> => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const res = await axios.delete(
+      `http://localhost:3000/api/v1/user/delete-user/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log("Delete API Error", error);
+    throw error;
   }
 };

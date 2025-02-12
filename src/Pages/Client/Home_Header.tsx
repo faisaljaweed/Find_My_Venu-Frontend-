@@ -1,9 +1,6 @@
-// import Button from "../../Components/Button";
-// import Input from "../../Components/Input";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import { NavLink } from "react-router-dom";
 import bg from "../../images/pool-relaxation-sea-scene-nature.jpg";
 const Home_Header = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);

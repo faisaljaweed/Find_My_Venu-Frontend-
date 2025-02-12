@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import Input from "../Components/Input";
-// import Button from "../Components/Button";
 import { Signup_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

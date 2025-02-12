@@ -12,3 +12,11 @@ export type Login_Types = {
   email: string;
   password: string;
 };
+
+export type User = {
+  _id: string;
+  email: string;
+  username: string;
+  role: string;
+  verified: boolean;
+};

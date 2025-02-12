@@ -52,9 +52,7 @@ export const addProduct = (productData: AddProduct) => {
 export const getProductById = async () => {
   try {
     const token = localStorage.getItem("accessToken");
-    // console.log("Access Token", token);
     const response = await axios.get(
-      // `http://localhost:3000/api/v1/property/get-product/${productId}`,
       `http://localhost:3000/api/v1/property/get-product`,
       {
         headers: {

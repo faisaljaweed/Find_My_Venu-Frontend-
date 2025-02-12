@@ -64,7 +64,7 @@ const Booking_Detail: React.FC = () => {
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Products fetch karne main masla hua.");
+        setError("Product fetch Error");
         setLoading(false);
       }
     };

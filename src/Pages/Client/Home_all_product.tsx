@@ -47,9 +47,6 @@ const Home_all_product = () => {
                 <span className="bg-[#1e3a8a] text-white px-3 py-1 rounded-full text-sm font-semibold">
                   ${product.price}
                 </span>
-                {/* <span className="text-orange-500 font-semibold">
-                  {product.email}
-                </span> */}
               </div>
 
               <p className="text-gray-700 mb-3">{product.description}</p>

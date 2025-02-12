@@ -11,7 +11,6 @@ const Detail_all_product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
-  // const [hasActiveBooking, setHasActiveBooking] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]); // Track booked dates
   const [userBookedProducts, setUserBookedProducts] = useState<string[]>([]); // Store user booked products
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
@@ -56,31 +55,6 @@ const Detail_all_product = () => {
 
     fetchBookings();
   }, [id]);
-
-  // useEffect(() => {
-  //   const fetchBookings = async () => {
-  //     try {
-  //       let accessToken = localStorage.getItem("accessToken");
-  //       const response = await axios.get(
-  //         "http://localhost:3000/api/v1/booking/get-user-booking",
-  //         {
-  //           headers: { Authorization: `Bearer ${accessToken}` },
-  //         }
-  //       );
-
-  //       // ✅ Sab users ki bookings check karna hai sirf is product ke liye
-  //       const bookedDatesArray = response.data.data
-  //         .filter((booking: any) => booking.productId === id)
-  //         .map((booking: any) => new Date(booking.bookingDate));
-
-  //       setBookedDates(bookedDatesArray);
-  //     } catch (error) {
-  //       console.error("Error fetching bookings:", error);
-  //     }
-  //   };
-
-  //   fetchBookings();
-  // }, [id]);
 
   useEffect(() => {
     if (id) {
@@ -182,17 +156,6 @@ const Detail_all_product = () => {
               minDate={new Date()}
               excludeDates={bookedDates} // Disable booked dates
             />
-            {/* <DatePicker
-              selected={startDate}
-              onChange={(date: Date | null) => setStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={startDate}
-              placeholderText="Start Date"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              minDate={new Date()}
-              excludeDates={bookedDates} // ✅ Disable already booked dates
-            /> */}
           </div>
 
           <div className="mt-6 flex justify-center">

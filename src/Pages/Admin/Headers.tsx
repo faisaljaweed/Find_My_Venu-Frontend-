@@ -36,7 +36,7 @@ const Header = () => {
       {/* Navigation Links */}
       <nav className="mt-5 space-y-3 md:space-y-4">
         <NavLink
-          to="/vendor_dashboard/check_booking"
+          to="/admin_dashboard/add_vendor"
           className={({ isActive }) =>
             `block ${
               isActive
@@ -45,10 +45,10 @@ const Header = () => {
             }`
           }
         >
-          Check Booking
+          Add Vendor
         </NavLink>
         <NavLink
-          to="/vendor_dashboard/booking_details"
+          to="/admin_dashboard/user-detail"
           className={({ isActive }) =>
             `block ${
               isActive
@@ -57,10 +57,10 @@ const Header = () => {
             }`
           }
         >
-          Booking Details
+          Check User Detail
         </NavLink>
         <NavLink
-          to="/vendor_dashboard/add_product"
+          to="/admin_dashboard/check-booking-detail"
           className={({ isActive }) =>
             `block ${
               isActive
@@ -69,10 +69,10 @@ const Header = () => {
             }`
           }
         >
-          Add Product
+          Check Booking Details
         </NavLink>
         <NavLink
-          to="/vendor_dashboard/booking-response"
+          to="/admin_dashboard/check-product-detail"
           className={({ isActive }) =>
             `block ${
               isActive
@@ -81,19 +81,7 @@ const Header = () => {
             }`
           }
         >
-          Booking Response
-        </NavLink>
-        <NavLink
-          to="/vendor_dashboard/add-booking"
-          className={({ isActive }) =>
-            `block ${
-              isActive
-                ? "text-[#2e7d32] font-bold"
-                : "text-white hover:text-gray-300"
-            }`
-          }
-        >
-          Add Booking
+          Check Product Details
         </NavLink>
       </nav>
 
