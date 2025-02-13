@@ -81,3 +81,20 @@ export const getSpecificBooking = async (id: string) => {
     console.log("Booking Error", error);
   }
 };
+
+export const getBooking = async () => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = axios.get(
+      `http://localhost:3000/api/v1/booking//get-all-booking`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Booking Error", error);
+  }
+};

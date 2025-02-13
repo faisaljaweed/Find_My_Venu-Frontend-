@@ -1,4 +1,46 @@
+import { useState } from "react";
+import { Signup_api } from "../../Components/api/User_Api";
+import { toast } from "react-toastify";
+
 export const Add_Vendor = () => {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("vendor");
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setUserName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+
+    const userData = {
+      username,
+      email,
+      password,
+      confirmPassword,
+      role,
+    };
+    Signup_api(userData)
+      .then((res) => {
+        const emailToken = res?.data?.data?.loggedInUser.emailToken;
+        console.log(`Email Token is ${emailToken}`);
+        if (emailToken) {
+          localStorage.setItem("emailToken", emailToken);
+        }
+        console.log(res);
+        if (res?.status === 200) {
+          //  navigate("/verify-email");
+          toast.success("Signup Successfull");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Signup Failed");
+      });
+  };
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -6,18 +48,20 @@ export const Add_Vendor = () => {
           <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
             Add Vendor
           </h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="vendor_name"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Vendor Name
+                Name
               </label>
               <input
                 type="text"
                 id="vendor_name"
                 name="vendor_name"
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
                 required
                 className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -27,12 +71,14 @@ export const Add_Vendor = () => {
                 htmlFor="vendor_email"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Vendor Email
+                Email
               </label>
               <input
                 type="email"
                 id="vendor_email"
                 name="vendor_email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -42,12 +88,16 @@ export const Add_Vendor = () => {
                 htmlFor="vendor_phone"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Vendor Phone
+                Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="vendor_phone"
                 name="vendor_phone"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 required
                 className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -57,16 +107,29 @@ export const Add_Vendor = () => {
                 htmlFor="vendor_address"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Vendor Address
+                Confirm Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="vendor_address"
                 name="vendor_address"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
                 required
                 className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+            <input
+              type="hidden"
+              id="role"
+              name="role"
+              value={role}
+              onChange={(e) => {
+                setRole(e.target.value);
+              }}
+            />
             <button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
