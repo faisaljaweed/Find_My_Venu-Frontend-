@@ -24,6 +24,11 @@ const Add_Product = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setName("");
+    setDescription("");
+    setPrice("");
+    setPrice("");
+    setType("");
     if (pics.length > 0) {
       const formData = new FormData(); // Create FormData object
       formData.append("name", name);

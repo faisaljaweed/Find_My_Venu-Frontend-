@@ -26,6 +26,7 @@ import Add_Booking from "./Pages/Vendor/Add_Booking";
 import User_Details from "./Pages/Admin/User_Details";
 import Check_Booking_Details from "./Pages/Admin/Check_Booking_Details";
 import Check_Product_details from "./Pages/Admin/Check_Product_details";
+import Contact from "./Contact";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -73,6 +74,7 @@ const router = createBrowserRouter(
       <Route path="/verify-email" element={<Verify_Email />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<Reset_Password />} />
+      <Route path="/contact" element={<Contact />} />
     </Route>
   )
 );

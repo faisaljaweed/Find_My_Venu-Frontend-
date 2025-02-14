@@ -29,7 +29,12 @@ const Header = () => {
         <Logo />
       </main>
       <main className="flex">
-        <Button className="mr-4 bg-white">
+        <Button
+          className="mr-4 bg-white"
+          onClick={() => {
+            navigate("/contact");
+          }}
+        >
           <span className="text-black font-bold">Contact</span>
         </Button>
         {isLogin ? (

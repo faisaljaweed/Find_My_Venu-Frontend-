@@ -87,7 +87,12 @@ const Header = () => {
 
       {/* Buttons Section */}
       <main className="flex flex-col mt-6 space-y-4 md:space-y-6">
-        <Button className="bg-white py-2 px-4 rounded">
+        <Button
+          className="bg-white py-2 px-4 rounded"
+          onClick={() => {
+            navigate("/contact");
+          }}
+        >
           <span className="text-black font-bold">Contact</span>
         </Button>
 
