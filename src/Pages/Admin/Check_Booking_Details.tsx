@@ -1,7 +1,148 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface Booking {
+  _id: string;
+  clientId?: {
+    username?: string;
+  };
+  productId?: {
+    name?: string;
+  };
+  bookingDate: string;
+  status: string;
+}
+
 const Check_Booking_Details = () => {
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getBooking = async () => {
+      const token = localStorage.getItem("accessToken");
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/booking/get-booking-only-admin`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setBookings(response.data.data); // Assuming the response has a `data` field
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        // setError("Failed to fetch bookings");
+        setLoading(false);
+      }
+    };
+    getBooking();
+  }, []);
+
+  const handleDelete = (id: string) => {
+    const token = localStorage.getItem("accessToken");
+    axios
+      .delete(`http://localhost:3000/api/v1/booking/delete-booking/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setBookings(bookings.filter((booking) => booking._id !== id));
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500 text-xl">{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h1>Check Booking Detail</h1>
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Check Booking Details
+        </h1>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <table className="min-w-full">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Client Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Product Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Booking Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {bookings.map((booking) => (
+                <tr key={booking._id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {booking.clientId?.username || "N/A"}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {booking.productId?.name || "N/A"}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {new Date(booking.bookingDate).toLocaleDateString()}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        booking.status === "approved"
+                          ? "bg-green-100 text-green-800"
+                          : booking.status === "rejected"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {booking.status}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(booking._id)}
+                      className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

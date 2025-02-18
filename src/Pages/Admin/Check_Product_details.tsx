@@ -18,14 +18,19 @@ interface Product {
 
 const Check_Product_details = () => {
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [loading, setLoading] = useState(true);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<{
+    [key: string]: boolean;
+  }>({});
   useEffect(() => {
     getAllProducts()
       .then((res) => {
         setProducts(res?.data || []);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []);
 
@@ -41,7 +46,19 @@ const Check_Product_details = () => {
     console.log(`Deleting product with ID: ${id}`);
     // Yahan API call laga sakte hain
   };
-
+  const toggleDescription = (id: string) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -87,9 +104,29 @@ const Check_Product_details = () => {
                 <Typography variant="h6" className="font-bold text-gray-800">
                   {product.name}
                 </Typography>
-                <Typography variant="body2" className="text-gray-600">
+                {/* <Typography variant="body2" className="text-gray-600">
                   {product.description}
+                </Typography> */}
+
+                {/* Description with "See More / See Less" */}
+                <Typography variant="body2" className="text-gray-600 mb-3">
+                  {expandedDescriptions[product._id] ||
+                  product.description.length <= 100
+                    ? product.description
+                    : `${product.description.substring(0, 100)}...`}
                 </Typography>
+                {product.description.length > 100 && (
+                  <Button
+                    size="small"
+                    onClick={() => toggleDescription(product._id)}
+                    className="text-blue-500 underline"
+                  >
+                    {expandedDescriptions[product._id]
+                      ? "See Less"
+                      : "See More"}
+                  </Button>
+                )}
+
                 <Typography variant="h6" className="text-blue-600 mt-2">
                   ${product.price}
                 </Typography>
