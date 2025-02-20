@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Box } from "@mui/material";
+import {
+  Button,
+  Box,
+  Modal,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import axios from "axios";
 
 // Client aur Product ke details ke liye interfaces
@@ -22,19 +29,6 @@ interface Booking {
   bookingDate: string; // ISO date string ya jo bhi format API se mile
   status: string;
 }
-
-const thStyle: React.CSSProperties = {
-  border: "1px solid #ddd",
-  padding: "8px",
-  textAlign: "left",
-  backgroundColor: "#f2f2f2",
-};
-
-const tdStyle: React.CSSProperties = {
-  border: "1px solid #ddd",
-  padding: "8px",
-};
-
 // Helper function to format date in "22-Jan-2000" format
 const formatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
@@ -60,6 +54,9 @@ const formatDate = (dateStr: string): string => {
 
 const Check_Booking: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,8 +71,6 @@ const Check_Booking: React.FC = () => {
           }
         );
         console.log(response.data);
-        // Maan lete hain ke API response kuch is tarah ka hai:
-        // { statuscode: 200, message: "Bookings Fetched", data: [ ...booking objects... ], success: true }
         setBookings(response.data.data);
       } catch (error) {
         console.log(error);
@@ -84,10 +79,54 @@ const Check_Booking: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleEdit = (booking: Booking) => {
+    setSelectedBooking(booking);
+    setStatus(booking.status);
+    setModalOpen(true);
+  };
+
+  const handleStatusChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value);
+  };
+
+  const handleUpdateStatus = async () => {
+    if (!selectedBooking) return;
+
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.put(
+        `http://localhost:3000/api/v1/booking/update-booking/${selectedBooking._id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        // Update the booking status in the state
+        const updatedBookings = bookings.map((booking) =>
+          booking._id === selectedBooking._id ? { ...booking, status } : booking
+        );
+        setBookings(updatedBookings);
+
+        // If status is "rejected", delete the booking
+        if (status === "rejected") {
+          handleDelete(selectedBooking._id);
+        }
+
+        setModalOpen(false); // Close the modal
+      }
+    } catch (error) {
+      console.log("Error updating status:", error);
+    }
+  };
+
   const handleDelete = async (id: string) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const response = axios.delete(
+      await axios.delete(
         `http://localhost:3000/api/v1/booking/delete-booking/${id}`,
         {
           headers: {
@@ -96,67 +135,145 @@ const Check_Booking: React.FC = () => {
         }
       );
       setBookings(bookings.filter((booking) => booking._id !== id));
-      console.log(response);
     } catch (error) {
-      console.log("Something went wrong", error);
+      console.log("Error deleting booking:", error);
     }
   };
 
   return (
-    <Box p={2}>
-      <h1 style={{ textAlign: "center", marginBottom: "16px" }}>
-        Check Booking
-      </h1>
-
-      <Box mt={2} sx={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th style={thStyle}>S.No</th>
-              <th style={thStyle}>ID</th>
-              <th style={thStyle}>Name</th>
-              <th style={thStyle}>Product Name</th>
-              <th style={thStyle}>Contact No</th>
-              <th style={thStyle}>Booking Date</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.length === 0 ? (
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Check Booking
+        </h1>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <table className="min-w-full">
+            <thead className="bg-gray-200">
               <tr>
-                <td style={tdStyle} colSpan={4}>
-                  No bookings found.
-                </td>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  S.No
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Product Name
+                </th>
+                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Contact No
+                </th> */}
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Booking Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Action
+                </th>
               </tr>
-            ) : (
-              bookings.map((booking, index) => (
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {bookings.map((booking, index) => (
                 <tr key={booking._id}>
-                  <td style={tdStyle}>{index + 1}</td>
-                  <td style={tdStyle}>{booking._id}</td>
-                  <td style={tdStyle}>{booking.clientId.username}</td>
-                  <td style={tdStyle}>{booking.productId?.name || "Jake"}</td>
-                  <td style={tdStyle}>{booking.contactNo}</td>
-                  <td style={tdStyle}>{formatDate(booking.bookingDate)}</td>
-                  <td style={tdStyle}>{booking.status}</td>
-                  <td style={tdStyle}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        handleDelete(booking._id);
-                      }}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{index + 1}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{booking._id}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {booking.clientId.username}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {booking.productId?.name || "N/A"}
+                    </div>
+                  </td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {booking.contactNo}
+                    </div>
+                  </td> */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">
+                      {formatDate(booking.bookingDate)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        booking.status === "approved"
+                          ? "bg-green-100 text-green-800"
+                          : booking.status === "rejected"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
                     >
-                      Delete
-                    </Button>
+                      {booking.status}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleEdit(booking)}
+                      className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </Box>
-    </Box>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <h2 id="modal-modal-title">Update Booking Status</h2>
+          <Select
+            value={status}
+            onChange={handleStatusChange}
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
+          </Select>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleUpdateStatus}
+            >
+              Update
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </div>
   );
 };
 

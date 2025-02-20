@@ -21,7 +21,7 @@ import Booking_update from "./Pages/Client/Booking_update";
 import Protected_Routes from "./Protected_Routes";
 import Booking_Detail from "./Pages/Vendor/Booking";
 import Check_Booking from "./Pages/Vendor/Check_Booking";
-import BookingResponse from "./Pages/Vendor/Booking_response";
+// import BookingResponse from "./Pages/Vendor/Booking_response";
 import Add_Booking from "./Pages/Vendor/Add_Booking";
 import User_Details from "./Pages/Admin/User_Details";
 import Check_Booking_Details from "./Pages/Admin/Check_Booking_Details";
@@ -67,11 +67,11 @@ const router = createBrowserRouter(
           <Route path="check_booking" element={<Check_Booking />} />
           <Route path="booking_details" element={<Booking_Detail />} />
           <Route path="add-booking" element={<Add_Booking />} />
-          <Route path="booking-response" element={<BookingResponse />} />
+          {/* <Route path="booking-response" element={<BookingResponse />} /> */}
         </Route>
       </Route>
       {/* end Vendor Routes */}
-      <Route path="/verify-email" element={<Verify_Email />} />
+      <Route path="/verify-email/:emailToken" element={<Verify_Email />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<Reset_Password />} />
       <Route path="/contact" element={<Contact />} />

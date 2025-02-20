@@ -48,7 +48,7 @@ export const LogOut_api = async () => {
 
 export const verifyEmailApi = async (emailToken: string) => {
   try {
-    const response = await axios.get(
+    const response = await axios.post(
       `http://localhost:3000/api/v1/user/verify-email/${emailToken}`
     );
     return response;

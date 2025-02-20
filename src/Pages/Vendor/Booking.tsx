@@ -158,7 +158,7 @@ const Booking_Detail: React.FC = () => {
 
       {/* Agar koi product na ho */}
       {products.length === 0 ? (
-        <p className="text-center text-gray-500">Koi product nahi mila.</p>
+        <p className="text-center text-gray-500">No Product</p>
       ) : (
         // Grid layout for products
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

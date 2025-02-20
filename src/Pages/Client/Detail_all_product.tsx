@@ -17,6 +17,24 @@ const Detail_all_product = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchBookedDates = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/v1/property/get-product-bookings/${id}`
+        );
+        const dates = response.data.data.map(
+          (dateString: string) => new Date(dateString)
+        );
+        setBookedDates(dates); // Booked dates ko state mein set karein
+      } catch (error) {
+        console.error("Error fetching booked dates:", error);
+      }
+    };
+
+    fetchBookedDates();
+  }, [id]);
+
+  useEffect(() => {
     const fetchBookings = async () => {
       try {
         let accessToken = localStorage.getItem("accessToken");
@@ -36,18 +54,10 @@ const Detail_all_product = () => {
 
         if (activeBooking) {
           setBookingStatus(activeBooking.status); // Set booking status
+          if (activeBooking.status === "approved") {
+            setStartDate(new Date(activeBooking.bookingDate));
+          }
         }
-
-        const bookedDatesArray = response.data.data
-          .filter((booking: any) => booking.productId === id)
-          .map((booking: any) => new Date(booking.bookingDate));
-
-        const bookedProducts = response.data.data.map(
-          (booking: any) => booking.productId
-        );
-
-        setBookedDates(bookedDatesArray);
-        setUserBookedProducts(bookedProducts);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
@@ -160,20 +170,27 @@ const Detail_all_product = () => {
 
           <div className="mt-6 flex justify-center">
             {bookingStatus ? (
-              <p className="text-lg font-semibold">
-                Booking Status:{" "}
-                <span
-                  className={`${
-                    bookingStatus === "pending"
-                      ? "text-yellow-500"
-                      : bookingStatus === "approved"
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
-                  {bookingStatus.toUpperCase()}
-                </span>
-              </p>
+              <div>
+                <p className="text-lg font-semibold">
+                  Booking Status:{" "}
+                  <span
+                    className={`${
+                      bookingStatus === "pending"
+                        ? "text-yellow-500"
+                        : bookingStatus === "approved"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {bookingStatus.toUpperCase()}
+                  </span>
+                </p>
+                {bookingStatus === "approved" && startDate && (
+                  <p className="mt-2 text-blue-600">
+                    Booked Date: {startDate.toDateString()}
+                  </p>
+                )}
+              </div>
             ) : (
               <button
                 onClick={addBooking}

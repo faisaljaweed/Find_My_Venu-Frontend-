@@ -1,4 +1,3 @@
-import React from "react";
 import DealSection1 from "../../images/DealSection-1-.jpg";
 import DealSection2 from "../../images/DealSection-2-.jpg";
 import DealSection3 from "../../images/DealSection-3-.jpg";
