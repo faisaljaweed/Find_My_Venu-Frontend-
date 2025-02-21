@@ -5,9 +5,7 @@ import Footer from "../../Components/Footer";
 const Client_Dashboard = () => {
   return (
     <>
-      <div>
-        <Header />
-      </div>
+      <div>{/* <Header /> */}</div>
       <div>
         <Outlet />
       </div>

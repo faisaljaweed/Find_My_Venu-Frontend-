@@ -5,7 +5,7 @@ export const Bookig_add_api = async (
   productId: string
 ) => {
   try {
-    let accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.post(
       `http://localhost:3000/api/v1/booking/add-booking`,
       {
@@ -30,7 +30,7 @@ export const Vendor_Bookig_add_api = async (
   productId: string
 ) => {
   try {
-    let accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.post(
       `http://localhost:3000/api/v1/booking/add-bookings`,
       {
@@ -50,7 +50,7 @@ export const Vendor_Bookig_add_api = async (
 };
 export const Bookig_update_api = async (id: string) => {
   try {
-    let accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.put(
       `http://localhost:3000/api/v1/booking/update-booking${id}`,
       {
@@ -67,7 +67,7 @@ export const Bookig_update_api = async (id: string) => {
 
 export const getSpecificBooking = async (id: string) => {
   try {
-    let accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
     const response = await axios.get(
       `http://localhost:3000/api/v1/booking/get-specific-booking/${id}`,
       {

@@ -24,26 +24,33 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <div className="flex justify-between px-20 py-5 " id="header">
+    <div
+      className="flex justify-between px-20 py-5 font-bold bg-transparent"
+      id="header"
+    >
       <main>
         <Logo />
       </main>
       <main className="flex">
         <Button
-          className="mr-4 bg-white"
+          className="mr-4 bg-[#4b1011] "
           onClick={() => {
             navigate("/contact");
           }}
         >
-          <span className="text-black font-bold">Contact</span>
+          <span className="text-white font-bold font-Playfair Display">
+            Contact
+          </span>
         </Button>
         {isLogin ? (
-          <span className="" onClick={handleLogout}>
+          <span onClick={handleLogout}>
             <Logout />
           </span>
         ) : (
-          <Button className="bg-white " onClick={handleLogin}>
-            <span className="text-black font-bold">Login</span>
+          <Button className="bg-[#4b1011] " onClick={handleLogin}>
+            <span className="text-white font-bold font-Playfair Display">
+              Login
+            </span>
           </Button>
         )}
       </main>

@@ -21,7 +21,7 @@ const Login = () => {
 
     Login_api({ email, password })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         const user = res?.data?.data?.loggedInUser;
         localStorage.setItem("user", JSON.stringify(user));
@@ -83,7 +83,7 @@ const Login = () => {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              console.log(e.target.value);
+              // console.log(e.target.value);
             }}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
@@ -96,7 +96,7 @@ const Login = () => {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              console.log(e.target.value);
+              // console.log(e.target.value);
             }}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required

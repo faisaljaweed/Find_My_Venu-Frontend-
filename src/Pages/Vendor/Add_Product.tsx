@@ -170,6 +170,8 @@
 import { useState } from "react";
 import { addProduct } from "../../Components/api/Product_Api";
 import Input from "../../Components/Input";
+import { toast } from "react-toastify";
+import { set } from "react-datepicker/dist/date_utils";
 
 const Add_Product = () => {
   const [name, setName] = useState("");
@@ -197,6 +199,8 @@ const Add_Product = () => {
     setDescription("");
     setPrice("");
     setType("");
+    setLocation("");
+    setDate(new Date());
     if (pics.length > 0) {
       const formData = new FormData(); // Create FormData object
       formData.append("name", name);
@@ -209,8 +213,14 @@ const Add_Product = () => {
         formData.append("pics", file); // Append each file to FormData
       });
       addProduct(formData)
-        ?.then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        ?.then((res) => {
+          console.log(res);
+          toast.success("Product added successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Failed to add product");
+        });
     } else {
       console.log("At least one product picture is required");
     }

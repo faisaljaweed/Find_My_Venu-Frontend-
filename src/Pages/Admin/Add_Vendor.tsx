@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Signup_api } from "../../Components/api/User_Api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Add_Vendor = () => {
   const [username, setUserName] = useState("");
@@ -9,6 +10,7 @@ export const Add_Vendor = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("vendor");
 
+  const navigate = useNavigate();
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setUserName("");
@@ -23,16 +25,20 @@ export const Add_Vendor = () => {
       confirmPassword,
       role,
     };
+
     Signup_api(userData)
       .then((res) => {
         const emailToken = res?.data?.data?.loggedInUser.emailToken;
         console.log(`Email Token is ${emailToken}`);
-        if (emailToken) {
-          localStorage.setItem("emailToken", emailToken);
-        }
+        // if (emailToken) {
+        //   localStorage.setItem("emailToken", emailToken);
+        // }
         console.log(res);
         if (res?.status === 200) {
-          //  navigate("/verify-email");
+          navigate(`/verify-email/${emailToken}`, {
+            state: { emailToken: emailToken },
+          });
+          console.log("Email Token", emailToken);
           toast.success("Signup Successfull");
         }
       })

@@ -13,15 +13,15 @@ export const getAllProducts = async () => {
 };
 
 export const getDetailProduct = async (id: string) => {
-  const token = localStorage.getItem("accessToken");
+  // const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/property/get-product/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `http://localhost:3000/api/v1/property/get-product/${id}`
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
     );
     return response;
   } catch (error) {

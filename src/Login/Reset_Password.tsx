@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Button from "../Components/Button";
 import Input from "../Components/Input";
-// import { ResetPassword_api } from "../Components/api/User_Api";
+import { resetPasswordApi } from "../Components/api/User_Api";
 
 const Reset_Password = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -18,15 +18,17 @@ const Reset_Password = () => {
       return;
     }
 
-    // ResetPassword_api({ newPassword, confirmPassword })
-    //   .then((res) => {
-    //     toast.success("Password reset successfully");
-    //     navigate("/login");
-    //   })
-    //   .catch((err) => {
-    //     toast.error("Failed to reset password");
-    //     console.log(err);
-    //   });
+    resetPasswordApi(newPassword, confirmPassword)
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success("Password reset successfully");
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        toast.error("Failed to reset password");
+        console.log(err);
+      });
   };
 
   return (

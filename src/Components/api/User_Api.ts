@@ -61,7 +61,7 @@ export const forgotPasswordApi = async (email: string) => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/v1/user/forgot-password`,
-      email
+      { email }
     );
     return response;
   } catch (error) {
@@ -75,7 +75,7 @@ export const resetPasswordApi = async (
 ) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user//reset-password/`,
+      `http://localhost:3000/api/v1/user/reset-password/`,
       {
         newPassword,
         confirmPassword,

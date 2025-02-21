@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Button from "../Components/Button";
 import Input from "../Components/Input";
-// import { ForgotPassword_api } from "../Components/api/User_Api";
+import { forgotPasswordApi } from "../Components/api/User_Api";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -12,15 +12,17 @@ const ForgotPassword = () => {
   const handleForgotPassword = (e: any) => {
     e.preventDefault();
 
-    // ForgotPassword_api({ email })
-    //   .then((res) => {
-    //     toast.success("Password reset link sent to your email");
-    //     navigate("/reset-password"); // Navigate to reset password screen
-    //   })
-    //   .catch((err) => {
-    //     toast.error("Failed to send password reset link");
-    //     console.log(err);
-    //   });
+    forgotPasswordApi(email)
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success("Password reset link sent to your email");
+          navigate("/reset-password"); // Navigate to reset password screen
+        }
+      })
+      .catch((err) => {
+        toast.error("Failed to send password reset link");
+        console.log(err);
+      });
   };
 
   return (

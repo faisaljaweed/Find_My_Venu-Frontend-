@@ -6,21 +6,28 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Bookig_add_api } from "../../Components/api/Booking_Api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Detail_all_product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [bookedDates, setBookedDates] = useState<Date[]>([]); // Track booked dates
-  const [userBookedProducts, setUserBookedProducts] = useState<string[]>([]); // Store user booked products
+  const [userBookedProducts] = useState<string[]>([]); // Store user booked products
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookedDates = async () => {
       try {
+        const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `http://localhost:3000/api/v1/property/get-product-bookings/${id}`
+          `http://localhost:3000/api/v1/property/get-product-bookings/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const dates = response.data.data.map(
           (dateString: string) => new Date(dateString)
@@ -37,7 +44,7 @@ const Detail_all_product = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        let accessToken = localStorage.getItem("accessToken");
+        const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get(
           "http://localhost:3000/api/v1/booking/get-user-booking",
           {
@@ -47,7 +54,11 @@ const Detail_all_product = () => {
 
         const currentDate = new Date();
         const activeBooking = response.data.data.find(
-          (booking: any) =>
+          (booking: {
+            bookingDate: string;
+            productId: string;
+            status: string;
+          }) =>
             new Date(booking.bookingDate) >= currentDate &&
             booking.productId === id
         );
@@ -84,7 +95,12 @@ const Detail_all_product = () => {
       Bookig_add_api(bookingDate, id)
         .then((res) => {
           console.log(res);
-          navigate(`/luxury-villa/${id}/booking-update`);
+          if (res && res.status === 200) {
+            // navigate(`/luxury-villa/${id}/booking-update`);
+            toast.success("Booking request sent successfully!");
+          } else {
+            toast.error("Please login to book this product.");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -98,10 +114,13 @@ const Detail_all_product = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Product Details</h1>
+      {/* <h1 className="text-2xl font-bold text-center mb-4">Product Details</h1> */}
 
       {product ? (
         <div>
+          <h1 className="text-2xl font-bold text-center mb-4">
+            {product.name}
+          </h1>
           <div className="flex justify-center mb-6">
             <img
               src={product.pics[0]}

@@ -1,23 +1,25 @@
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+// import { useState } from "react";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import bg from "../../images/pool-relaxation-sea-scene-nature.jpg";
+import bg from "../../images/Third-scaled.jpg";
+import Header from "../../Components/Header";
 const Home_Header = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  // const [startDate, setStartDate] = useState<Date | null>(null);
+  // const [endDate, setEndDate] = useState<Date | null>(null);
 
   return (
     <div
       className=" bg-cover bg-center bg-gray-100 min-h-screen p-6"
       style={{ backgroundImage: `url(${bg}) ` }}
     >
+      <Header />
       {/* Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 mt-8">
         <h1 className="text-4xl md:text-4xl font-bold text-white">Where to?</h1>
       </div>
 
       {/* Search Bar */}
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <div className="flex flex-col md:flex-row bg-white rounded-md shadow-md p-4 gap-4 w-full max-w-4xl">
           <input
             type="text"
@@ -57,7 +59,7 @@ const Home_Header = () => {
             Search
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Member Info */}
       <div className="mt-6 max-w-4xl mx-auto bg-blue-900 text-white p-4 rounded-md flex flex-col md:flex-row justify-between items-center gap-4">
