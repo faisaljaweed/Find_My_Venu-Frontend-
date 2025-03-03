@@ -1,8 +1,8 @@
 // import { useState } from "react";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import bg from "../../images/Third-scaled.jpg";
-import Header from "../../Components/Header";
+import bg from "../../images/01.jpg";
+// import Header from "../../Components/Header";
 const Home_Header = () => {
   // const [startDate, setStartDate] = useState<Date | null>(null);
   // const [endDate, setEndDate] = useState<Date | null>(null);
@@ -12,10 +12,12 @@ const Home_Header = () => {
       className=" bg-cover bg-center bg-gray-100 min-h-screen p-6"
       style={{ backgroundImage: `url(${bg}) ` }}
     >
-      <Header />
+      {/* <Header /> */}
       {/* Header */}
-      <div className="text-center mb-8 mt-8">
-        <h1 className="text-4xl md:text-4xl font-bold text-white">Where to?</h1>
+      <div className="text-center mb-8 mt-32">
+        <h1 className="text-4xl md:text-7xl font-bold text-[#555555]">
+          Restaurant Venues in Karachi
+        </h1>
       </div>
 
       {/* Search Bar */}
@@ -62,26 +64,27 @@ const Home_Header = () => {
       </div> */}
 
       {/* Member Info */}
-      <div className="mt-6 max-w-4xl mx-auto bg-blue-900 text-white p-4 rounded-md flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="flex items-center gap-2 text-sm text-center md:text-left">
-          <span className="bg-yellow-400 text-black rounded-full p-2">
+      <div className="mt-6 max-w-4xl mx-auto  text-[#555555] p-4 rounded-md flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="flex items-center gap-2 text-md text-center md:text-left">
+          {/* <span className="bg-yellow-400 text-black rounded-full p-2">
             <i className="fas fa-lock"></i>
-          </span>
-          Members save 10% or more on over 100,000 hotels worldwide when you
+          </span> */}
+          Discover the best restaurant venues in Sydney to hire for dining and
+          celebratory functions
         </p>
       </div>
 
       {/* Features Section */}
       <div className="mt-6 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <div className="bg-red-600 text-white p-6 rounded-md flex items-center gap-4">
+        <div className="bg-white text-[#555555] p-6 rounded-md flex items-center gap-4">
           <i className="fas fa-calendar-alt text-2xl"></i>
           <p>Earn rewards on every night you stay</p>
         </div>
-        <div className="bg-red-600 text-white p-6 rounded-md flex items-center gap-4">
+        <div className="bg-white text-[#555555] p-6 rounded-md flex items-center gap-4">
           <i className="fas fa-tag text-2xl"></i>
           <p>Save more with Member Prices</p>
         </div>
-        <div className="bg-red-600 text-white p-6 rounded-md flex items-center gap-4">
+        <div className="bg-white text-[#555555] p-6 rounded-md flex items-center gap-4">
           <i className="fas fa-clock text-2xl"></i>
           <p>Free cancellation options if plans change</p>
         </div>

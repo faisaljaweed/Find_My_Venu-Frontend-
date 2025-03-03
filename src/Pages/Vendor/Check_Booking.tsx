@@ -146,32 +146,29 @@ const Check_Booking: React.FC = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Check Booking
         </h1>
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="bg-white shadow-md rounded-lg overflow-x-auto">
           <table className="min-w-full">
             <thead className="bg-gray-200">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   S.No
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Product Name
                 </th>
-                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Contact No
-                </th> */}
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Booking Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Action
                 </th>
               </tr>
@@ -179,33 +176,22 @@ const Check_Booking: React.FC = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {bookings.map((booking, index) => (
                 <tr key={booking._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{index + 1}</div>
+                  <td className="px-4 py-4 text-sm text-gray-900">
+                    {index + 1}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{booking._id}</div>
+                  <td className="px-4 py-4 text-sm text-gray-900">
+                    {booking._id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {booking.clientId?.username || "N/A"}
-                    </div>
+                  <td className="px-4 py-4 text-sm text-gray-900">
+                    {booking.clientId?.username || "N/A"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {booking.productId?.name || "N/A"}
-                    </div>
+                  <td className="px-4 py-4 text-sm text-gray-900">
+                    {booking.productId?.name || "N/A"}
                   </td>
-                  {/* <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {booking.contactNo}
-                    </div>
-                  </td> */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {formatDate(booking.bookingDate)}
-                    </div>
+                  <td className="px-4 py-4 text-sm text-gray-900">
+                    {formatDate(booking.bookingDate)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         booking.status === "approved"
@@ -218,10 +204,10 @@ const Check_Booking: React.FC = () => {
                       {booking.status}
                     </span>
                   </td>
-                  <td>
+                  <td className="px-4 py-4">
                     <button
                       onClick={() => handleEdit(booking)}
-                      className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800"
+                      className="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-red-800 hover:bg-yellow-200 transition"
                     >
                       Edit
                     </button>
@@ -245,10 +231,12 @@ const Check_Booking: React.FC = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
+            width: "90%", // 90% for mobile screens
+            maxWidth: 400, // Max width for larger screens
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
+            borderRadius: 2,
           }}
         >
           <h2 id="modal-modal-title">Update Booking Status</h2>

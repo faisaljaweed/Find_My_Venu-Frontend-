@@ -74,11 +74,10 @@ const Check_Product_details = () => {
       <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
         Check Product Details
       </h1>
-      <Grid container spacing={3} className="w-full max-w-5xl">
-        {products.map((product: any) => (
-          <Grid item xs={12} sm={6} md={4} key={product._id}>
-            <Card className="shadow-md rounded-lg overflow-hidden">
-              {/* Image Slider agar 2 ya zyada images hain */}
+      <Grid container spacing={3} className="w-full max-w-7xl mx-auto">
+        {products.map((product: Product) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={product._id}>
+            <Card className="shadow-md rounded-lg overflow-hidden h-full">
               {product.pics.length > 1 ? (
                 <Slider {...sliderSettings}>
                   {product.pics.map((img: string, index: number) => (
@@ -92,23 +91,17 @@ const Check_Product_details = () => {
                   ))}
                 </Slider>
               ) : (
-                // Agar sirf ek image ho to simple image show kare
                 <img
                   src={product.pics[0]}
                   alt={product.name}
                   className="w-full h-48 object-cover"
                 />
               )}
-
               <CardContent>
                 <Typography variant="h6" className="font-bold text-gray-800">
                   {product.name}
                 </Typography>
-                {/* <Typography variant="body2" className="text-gray-600">
-                  {product.description}
-                </Typography> */}
 
-                {/* Description with "See More / See Less" */}
                 <Typography variant="body2" className="text-gray-600 mb-3">
                   {expandedDescriptions[product._id] ||
                   product.description.length <= 100

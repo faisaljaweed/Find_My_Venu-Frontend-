@@ -2,19 +2,31 @@ import axios from "axios";
 
 export const Bookig_add_api = async (
   bookingDate: string,
-  productId: string
+  productId: string,
+  name: string,
+  startTime: string,
+  endTime: string,
+  totalGuest: string,
+  message: string,
+  email: string
 ) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
     const response = await axios.post(
       `http://localhost:3000/api/v1/booking/add-booking`,
       {
         bookingDate,
         productId,
+        name,
+        startTime,
+        endTime,
+        totalGuest,
+        message,
+        email,
       },
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
