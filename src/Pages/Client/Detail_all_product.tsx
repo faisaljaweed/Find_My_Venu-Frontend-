@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { getDetailProduct } from "../../Components/api/Product_Api";
 import { Product } from "../../Components/Types/Product_types";
 import DatePicker from "react-datepicker";
@@ -7,7 +7,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Bookig_add_api } from "../../Components/api/Booking_Api";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { getAllProducts } from "../../Components/api/Product_Api";
+import {
+  MapPin,
+  Home,
+  Users,
+  CarFront as ChairFront,
+  DotSquare as SquareFootage,
+  Calendar,
+  Clock,
+  Utensils,
+  Music,
+  Camera,
+} from "lucide-react";
 const Detail_all_product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
@@ -26,8 +38,11 @@ const Detail_all_product = () => {
   const [totalGuest, settotalGuest] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
-
+  const [showAll, setShowAll] = useState(false);
   // Function to open the image in full screen
+
+  // Gallery Image
+  const [products, setProducts] = useState<Product[]>([]);
   const openImage = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setIsImageOpen(true);
@@ -104,6 +119,7 @@ const Detail_all_product = () => {
       getDetailProduct(id)
         .then((res) => {
           setProduct(res?.data.data);
+          console.log(res?.data.data);
         })
         .catch((err) => {
           console.log("Something went wrong", err);
@@ -143,12 +159,24 @@ const Detail_all_product = () => {
     }
   };
 
+  // get ALl Products
+  useEffect(() => {
+    getAllProducts()
+      .then((res) => {
+        setProducts(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      });
+  }, []);
   return (
     <div className="max-w-7xl mx-auto p-4">
       {product ? (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex  mb-6">
+            {/* image large */}
+            <div className="flex mb-6">
               <img
                 src={product.pics[0]}
                 alt={product.name}
@@ -156,7 +184,7 @@ const Detail_all_product = () => {
                 onClick={() => openImage(product.pics[0])}
               />
             </div>
-
+            {/* multiple images */}
             <div className="grid grid-cols-3 gap-4 mb-6 mt-3">
               {product.pics.slice(1).map((image, index) => (
                 <img
@@ -169,37 +197,51 @@ const Detail_all_product = () => {
               ))}
             </div>
           </div>
+          {/* Venu Name and address */}
+          <div className="p-6">
+            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+            <div className="flex items-center mt-2 text-gray-600">
+              <MapPin size={18} className="mr-2" />
+              <span>{product.location}</span>
+            </div>
+          </div>
+          {/* venu Details */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+              <Home size={24} className="text-indigo-600 mb-2" />
+              <h3 className="text-sm font-medium text-gray-500">Venue Type</h3>
+              <p className="text-lg font-bold uppercase">{product.type}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+              <Users size={24} className="text-indigo-600 mb-2" />
+              <h3 className="text-sm font-medium text-gray-500">Standing</h3>
+              <p className="text-lg font-bold">{product.standingCapacity}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+              <ChairFront size={24} className="text-indigo-600 mb-2" />
+              <h3 className="text-sm font-medium text-gray-500">Seated</h3>
+              <p className="text-lg font-bold">{product.seatedCapacity}</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+              <SquareFootage size={24} className="text-indigo-600 mb-2" />
+              <h3 className="text-sm font-medium text-gray-500">Size (Sqm)</h3>
+              <p className="text-lg font-bold">{product.size}</p>
+            </div>
+          </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+            {/* Venu Description */}
             <div className="space-y-4 w-1/2">
-              <h2 className="text-6xl font-semibold">{product.name}</h2>
-              <p className="text-gray-700 text-sm ">{product.description}</p>
-
-              <div className="flex items-center space-x-4">
-                <span className="text-lg font-bold">Price:</span>
-                <span className="text-lg text-green-600">${product.price}</span>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <span className="text-lg font-bold">Location:</span>
-                <span className="text-lg">{product.location}</span>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <span className="text-lg font-bold">Type:</span>
-                <span className="text-lg">{product.type}</span>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <span className="text-lg font-bold">Available:</span>
-                <span className="text-lg text-green-600">
-                  {product.available ? "Yes" : "No"}
-                </span>
+              <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  About This Venue
+                </h2>
+                <p className="text-gray-700 mb-4">{product.description}</p>
               </div>
             </div>
-
+            {/* Booking Form */}
             <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm mx-auto">
-              <div className="bg-black text-white text-center h-14 py-2 rounded-t-2xl font-bold"></div>
+              <div className="bg-[#4f46e5] text-white text-center h-14 py-2 rounded-t-2xl font-bold"></div>
               <form className="space-y-4 mt-4 " onSubmit={addBooking}>
                 <input
                   type="text"
@@ -341,7 +383,7 @@ const Detail_all_product = () => {
                       className={`px-6 py-3 ${
                         userBookedProducts.includes(id as string)
                           ? "bg-gray-400 cursor-not-allowed"
-                          : "w-full bg-pink-500 text-white py-2 rounded-lg font-bold hover:bg-pink-600"
+                          : "w-full bg-[#4f46e5] text-white py-2 rounded-lg font-bold hover:bg-pink-600"
                       } text-white font-semibold rounded-lg shadow-lg transition`}
                     >
                       Book Now
@@ -353,6 +395,95 @@ const Detail_all_product = () => {
                 </p>
               </form>
             </div>
+          </div>
+
+          {/* Venu Feature */}
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Venue Features
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Calendar size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Event Planning</span>
+              </div>
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Utensils size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Catering Available</span>
+              </div>
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Music size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Sound System</span>
+              </div>
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Clock size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Flexible Hours</span>
+              </div>
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Camera size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Photography Spots</span>
+              </div>
+              <div className="flex items-center p-3 bg-gray-50 rounded-md">
+                <Users size={20} className="text-indigo-600 mr-3" />
+                <span className="text-gray-700">Private Events</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Gallery  */}
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {products
+                .slice(0, showAll ? products.length : 2)
+                .map((product, index) => (
+                  <NavLink
+                    to={`/luxury-villa/${product._id}`}
+                    className="group"
+                    onClick={(e) => {
+                      // Smooth Scroll और Force Refresh
+                      window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                      });
+
+                      // Optional: Force Reload
+                      // window.location.reload();
+                    }}
+                  >
+                    <div
+                      key={index}
+                      className="relative bg-white  overflow-hidden "
+                    >
+                      {/* Image Section */}
+                      <div className="relative h-64 w-full bg-gray-200 hover:scale-105 transition-transform duration-500">
+                        <img
+                          src={product.pics[0]}
+                          alt={product.name}
+                          className="w-full h-full object-cover "
+                        />
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="p-6 flex flex-col">
+                        <h2 className="text-sm font-bold text-gray-900 mb-4">
+                          {product.name}
+                        </h2>
+                        <p className="text-gray-700 text-xs mb-6 line-clamp-1">
+                          {product.description}
+                        </p>
+                      </div>
+                    </div>
+                  </NavLink>
+                ))}
+            </div>
+            {products.length > 2 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="mx-auto block px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                {showAll ? "Show Less" : "View All"}
+              </button>
+            )}
           </div>
         </div>
       ) : (

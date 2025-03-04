@@ -5,8 +5,12 @@ export type Product = {
   price: number;
   location: string;
   type: string;
-  available: boolean;
+  // available: boolean;
   pics: string[];
+  standingCapacity: number;
+  seatedCapacity: number;
+  size: string;
+  features: string[];
 };
 
 export type AddProduct = FormData;
