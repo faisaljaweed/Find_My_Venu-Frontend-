@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import SearchIcon from "@mui/icons-material/Search";
 interface Booking {
   _id: string;
   clientId?: {
@@ -16,8 +16,8 @@ interface Booking {
 const Check_Booking_Details = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [error] = useState(null);
+  const [search, setSearch] = useState<string>("");
   useEffect(() => {
     const getBooking = async () => {
       const token = localStorage.getItem("accessToken");
@@ -63,6 +63,13 @@ const Check_Booking_Details = () => {
     );
   }
 
+  const filteredUsers = bookings.filter(
+    (user) =>
+      user.clientId?.username?.toLowerCase().includes(search.toLowerCase()) ||
+      user.productId?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      user.bookingDate.toLowerCase().includes(search.toLowerCase())
+  );
+
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -77,6 +84,16 @@ const Check_Booking_Details = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-8">
           Check Booking Details
         </h1>
+        <div className="mb-4 flex items-center bg-white shadow-md rounded-lg p-2">
+          <SearchIcon className="text-gray-400 mr-2" aria-hidden="true" />
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-2 outline-none"
+          />
+        </div>
         <div className="bg-white shadow-md rounded-lg overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-200">
@@ -99,7 +116,7 @@ const Check_Booking_Details = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {bookings.map((booking) => (
+              {filteredUsers.map((booking) => (
                 <tr key={booking._id}>
                   <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
                     {booking.clientId?.username || "N/A"}

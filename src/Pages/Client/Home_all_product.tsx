@@ -38,7 +38,11 @@ const Home_all_product = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
         {products.map((product, index) => (
-          <NavLink to={`/luxury-villa/${product._id}`} className="group">
+          <NavLink
+            to={`/luxury-villa/${product._id}`}
+            key={product._id}
+            className="group"
+          >
             <div key={index} className="relative bg-white  overflow-hidden ">
               {/* Image Section */}
               <div className="relative h-64 w-full bg-gray-200 hover:scale-105 transition-transform duration-500">
@@ -54,16 +58,16 @@ const Home_all_product = () => {
                 {/* <FavoriteBorderIcon /> */}
                 {/* </div> */}
                 <div
-                  className="absolute bottom-4 right-4 flex items-center justify-center w-10 h-10 bg-black opacity-50 rounded-full cursor-pointer shadow-md"
+                  className="absolute bottom-4 right-4 flex items-center justify-center w-7 h-7 bg-[#050202] rounded-full cursor-pointer shadow-md"
                   onClick={(e) => {
                     e.preventDefault(); // NavLink ko prevent karein
                     toggleFavourite(product._id);
                   }}
                 >
                   {favourites[product._id] ? (
-                    <FavoriteIcon className="text-red-500" /> // Filled heart
+                    <FavoriteIcon className="text-red-500 " /> // Filled heart
                   ) : (
-                    <FavoriteBorderIcon className="text-gray-700" /> // Outline heart
+                    <FavoriteBorderIcon className="text-white " /> // Outline heart
                   )}
                 </div>
               </div>

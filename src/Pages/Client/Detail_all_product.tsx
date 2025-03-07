@@ -241,7 +241,9 @@ const Detail_all_product = () => {
             </div>
             {/* Booking Form */}
             <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm mx-auto">
-              <div className="bg-[#4f46e5] text-white text-center h-14 py-2 rounded-t-2xl font-bold"></div>
+              <div className="bg-[#4f46e5] text-white items-center text-center h-14 py-2 rounded-t-2xl font-bold">
+                Book Now
+              </div>
               <form className="space-y-4 mt-4 " onSubmit={addBooking}>
                 <input
                   type="text"
@@ -438,8 +440,9 @@ const Detail_all_product = () => {
                 .map((product, index) => (
                   <NavLink
                     to={`/luxury-villa/${product._id}`}
+                    key={product._id}
                     className="group"
-                    onClick={(e) => {
+                    onClick={() => {
                       // Smooth Scroll और Force Refresh
                       window.scrollTo({
                         top: 0,

@@ -39,7 +39,13 @@ export const Bookig_add_api = async (
 // Vendor Bookng Api
 export const Vendor_Bookig_add_api = async (
   bookingDate: string,
-  productId: string
+  productId: string,
+  name: string,
+  startTime: string,
+  endTime: string,
+  totalGuest: string,
+  message: string,
+  email: string
 ) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
@@ -48,6 +54,12 @@ export const Vendor_Bookig_add_api = async (
       {
         bookingDate,
         productId,
+        name,
+        startTime,
+        endTime,
+        totalGuest,
+        message,
+        email,
       },
       {
         headers: {

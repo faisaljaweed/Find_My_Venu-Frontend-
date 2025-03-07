@@ -11,6 +11,7 @@ export type Product = {
   seatedCapacity: number;
   size: string;
   features: string[];
+  vendorId?: string;
 };
 
 export type AddProduct = FormData;
