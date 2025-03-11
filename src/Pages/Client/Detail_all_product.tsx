@@ -66,6 +66,7 @@ const Detail_all_product = () => {
             },
           }
         );
+        console.log(response.data.data);
         const dates = response.data.data.map(
           (dateString: string) => new Date(dateString)
         );

@@ -18,7 +18,7 @@ const Add_Booking = () => {
   const [totalGuest, settotalGuest] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
-  const [bookingStatus, setBookingStatus] = useState<string | null>(null);
+
   // Fetch all products when the component mounts
 
   const userString = localStorage.getItem("user");
@@ -57,7 +57,6 @@ const Add_Booking = () => {
         selectedProduct,
         name,
         startTime,
-        // startDate ? startDate.toISOString() : "",
         endTime,
         totalGuest,
         message,
@@ -71,42 +70,29 @@ const Add_Booking = () => {
   };
 
   useEffect(() => {
-    const fetchBookings = async () => {
+    const fetchBookedDates = async () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:3000/api/v1/booking/get-user-booking",
+          `http://localhost:3000/api/v1/property/get-product-bookings/${selectedProduct}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
-
         console.log(response.data.data);
-        const currentDate = new Date();
-        const activeBooking = response.data.data.find(
-          (booking: {
-            bookingDate: string;
-            productId: string;
-            status: string;
-          }) =>
-            new Date(booking.bookingDate) >= currentDate &&
-            booking.productId === selectedProduct
+        const dates = response.data.data.map(
+          (dateString: string) => new Date(dateString)
         );
-
-        // setStartDate(new Date(activeBooking.bookingDate));
-        if (activeBooking) {
-          setBookingStatus(activeBooking.status); // Set booking status
-          if (activeBooking.status === "approved") {
-            setStartDate(new Date(activeBooking.bookingDate));
-          }
-        }
+        setBookedDates(dates); // Booked dates ko state mein set karein
       } catch (error) {
-        console.error("Error fetching bookings:", error);
+        console.error("Error fetching booked dates:", error);
       }
     };
 
-    fetchBookings();
-  }, []);
+    fetchBookedDates();
+  }, [selectedProduct]);
 
   return (
     <>
@@ -116,6 +102,7 @@ const Add_Booking = () => {
         </h1>
         <form className="space-y-4 mt-4 " onSubmit={addBooking}>
           <select
+            className="w-full border-[1.5px] border-black rounded-lg p-2"
             value={selectedProduct}
             onChange={(e) => setSelectedProduct(e.target.value)}
           >
