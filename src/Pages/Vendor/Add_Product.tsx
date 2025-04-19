@@ -24,7 +24,7 @@ const Add_Product = () => {
     bbqArea: false,
     airConditioning: false,
   });
-  const [fullScreenImage, setFullScreenImage] = useState<string | null>(null);
+  const [, setFullScreenImage] = useState<string | null>(null);
   const handleFeatureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFeatures((prev) => ({
@@ -226,24 +226,6 @@ const Add_Product = () => {
                 </div>
               )}
             </div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Upload Product Pictures (Max: 8)
-              </label>
-              <input
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
-                type="file"
-                multiple
-                onChange={handleFileChange}
-                accept="image/*"
-                required
-              />
-              {pics.length > 0 && (
-                <p className="text-sm text-gray-600 mt-2">
-                  {pics.length} file(s) selected
-                </p>
-              )}
-            </div> */}
 
             <div>
               <label className="block text-sm font-medium text-gray-700">

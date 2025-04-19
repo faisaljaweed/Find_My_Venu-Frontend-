@@ -27,9 +27,7 @@ const Signup = () => {
       .then((res) => {
         const emailToken = res?.data?.data?.loggedInUser.emailToken;
         console.log(`Email Token is ${emailToken}`);
-        // if (emailToken) {
-        //   localStorage.setItem("emailToken", emailToken);
-        // }
+
         console.log(res);
         if (res?.status === 200) {
           navigate(`/verify-email/${emailToken}`, {

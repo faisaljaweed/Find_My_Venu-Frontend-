@@ -71,18 +71,6 @@ const Header = () => {
         >
           Add Product
         </NavLink>
-        {/* <NavLink
-          to="/vendor_dashboard/booking-response"
-          className={({ isActive }) =>
-            `block ${
-              isActive
-                ? "text-[#2e7d32] font-bold"
-                : "text-white hover:text-gray-300"
-            }`
-          }
-        >
-          Booking Response
-        </NavLink> */}
         <NavLink
           to="/vendor_dashboard/add-booking"
           className={({ isActive }) =>
@@ -99,10 +87,6 @@ const Header = () => {
 
       {/* Buttons Section */}
       <main className="flex flex-col mt-6 space-y-4 md:space-y-6">
-        {/* <Button className="bg-white py-2 px-4 rounded">
-          <span className="text-black font-bold">Contact</span>
-        </Button> */}
-
         {isLogin ? (
           <span onClick={handleLogout} className="cursor-pointer">
             <Logout />

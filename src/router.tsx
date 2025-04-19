@@ -67,7 +67,6 @@ const router = createBrowserRouter(
           <Route path="check_booking" element={<Check_Booking />} />
           <Route path="booking_details" element={<Booking_Detail />} />
           <Route path="add-booking" element={<Add_Booking />} />
-          {/* <Route path="booking-response" element={<BookingResponse />} /> */}
         </Route>
       </Route>
       {/* end Vendor Routes */}

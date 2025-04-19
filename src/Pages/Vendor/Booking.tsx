@@ -64,7 +64,7 @@ const Booking_Detail: React.FC = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:3000/api/v1/property/get-product",
+          "https://venu-backend.vercel.app//api/v1/property/get-product",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const Booking_Detail: React.FC = () => {
 
           const token = localStorage.getItem("accessToken");
           const uploadResponse = await axios.post(
-            `"http://localhost:3000/api/v1/upload"`, // Your image upload endpoint
+            `"https://venu-backend.vercel.app//api/v1/upload"`, // Your image upload endpoint
             form,
             {
               headers: {
@@ -143,29 +143,7 @@ const Booking_Detail: React.FC = () => {
 
     input.click();
   };
-  // const handleEditImage = (index: number) => {
-  //   const newImageUrl = prompt("Enter new image URL:"); // Ya file upload dialog open karein
-  //   if (newImageUrl && selectedProduct) {
-  //     // Update the image in the selected product
-  //     const updatedPics = [...selectedProduct.pics];
-  //     updatedPics[index] = newImageUrl;
 
-  //     // Update the selected product state
-  //     setSelectedProduct((prev) => {
-  //       if (!prev) return prev;
-  //       return {
-  //         ...prev,
-  //         pics: updatedPics,
-  //       };
-  //     });
-
-  //     // Update the form data state
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       pics: updatedPics,
-  //     }));
-  //   }
-  // };
   // Modal ko open karne ka function, jisme selected product ki details set hoti hain
   const openEditModal = (product: Product) => {
     setSelectedProduct(product);
@@ -209,7 +187,7 @@ const Booking_Detail: React.FC = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `http://localhost:3000/api/v1/property/edit-product/${selectedProduct._id}`,
+        `https://venu-backend.vercel.app//api/v1/property/edit-product/${selectedProduct._id}`,
         {
           name: formData.name,
           description: formData.description,

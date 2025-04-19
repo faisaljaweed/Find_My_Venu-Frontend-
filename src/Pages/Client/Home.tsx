@@ -1,5 +1,5 @@
 import RestaurantVenues from "./Deal_Section";
-import DealsSection from "./Deal_Section";
+// import DealsSection from "./Deal_Section";
 import Home_Card from "./Home_Card";
 import Home_Header from "./Home_Header";
 import Indoor from "./Indoor";

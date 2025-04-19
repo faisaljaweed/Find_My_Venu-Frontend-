@@ -4,7 +4,7 @@ import { Login_Types, Signup_Types, User } from "../Types/User_types";
 export const Login_api = async (userData: Login_Types) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/v1/user/login",
+      "https://venu-backend.vercel.app//api/v1/user/login",
       userData
     );
     return response;
@@ -16,7 +16,7 @@ export const Login_api = async (userData: Login_Types) => {
 export const Signup_api = async (userData: Signup_Types) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/v1/user/signup",
+      "https://venu-backend.vercel.app//api/v1/user/signup",
       userData
     );
     return response;
@@ -32,7 +32,7 @@ export const LogOut_api = async () => {
       console.log("No Access Token Found");
     }
     const response = axios.post(
-      "http://localhost:3000/api/v1/user/logout",
+      "https://venu-backend.vercel.app//api/v1/user/logout",
       {},
       {
         headers: {
@@ -49,7 +49,7 @@ export const LogOut_api = async () => {
 export const verifyEmailApi = async (emailToken: string) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/verify-email/${emailToken}`
+      `https://venu-backend.vercel.app//api/v1/user/verify-email/${emailToken}`
     );
     return response;
   } catch (error) {
@@ -60,7 +60,7 @@ export const verifyEmailApi = async (emailToken: string) => {
 export const forgotPasswordApi = async (email: string) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/forgot-password`,
+      `https://venu-backend.vercel.app//api/v1/user/forgot-password`,
       { email }
     );
     return response;
@@ -75,7 +75,7 @@ export const resetPasswordApi = async (
 ) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/reset-password/`,
+      `https://venu-backend.vercel.app//api/v1/user/reset-password/`,
       {
         newPassword,
         confirmPassword,
@@ -94,7 +94,7 @@ export const getUser = async (): Promise<AxiosResponse<{ data: User[] }>> => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      `http://localhost:3000/api/v1/user/get-user`,
+      `https://venu-backend.vercel.app//api/v1/user/get-user`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -113,7 +113,7 @@ export const DeleteUser = async (id: string): Promise<AxiosResponse<any>> => {
   try {
     const token = localStorage.getItem("accessToken");
     const res = await axios.delete(
-      `http://localhost:3000/api/v1/user/delete-user/${id}`,
+      `https://venu-backend.vercel.app//api/v1/user/delete-user/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

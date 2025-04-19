@@ -59,7 +59,7 @@ const Detail_all_product = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `http://localhost:3000/api/v1/property/get-product-bookings/${id}`,
+          `https://venu-backend.vercel.app//api/v1/property/get-product-bookings/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +84,7 @@ const Detail_all_product = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:3000/api/v1/booking/get-user-booking",
+          "https://venu-backend.vercel.app//api/v1/booking/get-user-booking",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

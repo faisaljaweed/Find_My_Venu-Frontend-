@@ -32,10 +32,6 @@ const Home_all_product = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-36 mt-8">
-      {/* <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-10 uppercase tracking-wide">
-        Explore Our Luxury Villas
-      </h1> */}
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
         {products.map((product, index) => (
           <NavLink
@@ -51,12 +47,6 @@ const Home_all_product = () => {
                   alt={product.name}
                   className="w-full h-full object-cover "
                 />
-                {/* <div className="absolute bottom-4 right-4 bg-black opacity-50 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md"> */}
-                {/* <span className="bg-[#1e3a8a] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md"> */}
-                {/* ${product.price} */}
-                {/* </span> */}
-                {/* <FavoriteBorderIcon /> */}
-                {/* </div> */}
                 <div
                   className="absolute bottom-4 right-4 flex items-center justify-center w-7 h-7 bg-[#050202] rounded-full cursor-pointer shadow-md"
                   onClick={(e) => {
@@ -80,14 +70,6 @@ const Home_all_product = () => {
                 <p className="text-gray-700 text-xs mb-6 line-clamp-1">
                   {product.description}
                 </p>
-                {/* <Button
-                  onClick={() => {
-                    Navigate(`/luxury-villa/${product._id}`);
-                  }}
-                  className="mt-auto bg-[#1e3a8a] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-orange-600 transition-colors duration-300"
-                >
-                  Book Now
-                </Button> */}
               </div>
             </div>
           </NavLink>

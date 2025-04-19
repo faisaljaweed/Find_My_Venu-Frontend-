@@ -51,17 +51,6 @@ const Sidebar = () => {
         ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
         <Header />
-        {/* <ul>
-          <li className="p-2 hover:bg-gray-700 rounded" onClick={() => setIsOpen(false)}>
-            Home
-          </li>
-          <li className="p-2 hover:bg-gray-700 rounded" onClick={() => setIsOpen(false)}>
-            About
-          </li>
-          <li className="p-2 hover:bg-gray-700 rounded" onClick={() => setIsOpen(false)}>
-            Contact
-          </li>
-        </ul> */}
       </div>
     </div>
   );
