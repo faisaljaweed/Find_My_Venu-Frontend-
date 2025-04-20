@@ -23,7 +23,7 @@ const Check_Booking_Details = () => {
       const token = localStorage.getItem("accessToken");
       try {
         const response = await axios.get(
-          `https://venu-backend.vercel.app//api/v1/booking/get-booking-only-admin`,
+          `https://venu-backend.vercel.app/api/v1/booking/get-booking-only-admin`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const Check_Booking_Details = () => {
     const token = localStorage.getItem("accessToken");
     axios
       .delete(
-        `https://venu-backend.vercel.app//api/v1/booking/delete-booking/${id}`,
+        `https://venu-backend.vercel.app/api/v1/booking/delete-booking/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

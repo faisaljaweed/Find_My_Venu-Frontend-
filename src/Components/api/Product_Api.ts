@@ -3,7 +3,7 @@ import { AddProduct } from "../Types/Product_types";
 export const getAllProducts = async () => {
   try {
     const response = await axios.get(
-      `https://venu-backend.vercel.app//api/v1/property/get-product`
+      `https://venu-backend.vercel.app/api/v1/property/get-product`
     );
     return response.data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const getDetailProduct = async (id: string) => {
   // const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(
-      `https://venu-backend.vercel.app//api/v1/property/get-product/${id}`
+      `https://venu-backend.vercel.app/api/v1/property/get-product/${id}`
       // {
       //   headers: {
       //     Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ export const addProduct = (productData: AddProduct) => {
     const token = localStorage.getItem("accessToken");
     console.log("Token", token);
     const response = axios.post(
-      "https://venu-backend.vercel.app//api/v1/property/add-product",
+      "https://venu-backend.vercel.app/api/v1/property/add-product",
       productData,
       {
         headers: {
@@ -53,7 +53,7 @@ export const getProductById = async () => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      `https://venu-backend.vercel.app//api/v1/property/get-product`,
+      `https://venu-backend.vercel.app/api/v1/property/get-product`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ export const DeleteProduct = async (productId: string) => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.delete(
-      `https://venu-backend.vercel.app//api/v1/property/delete-product/${productId}`,
+      `https://venu-backend.vercel.app/api/v1/property/delete-product/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -63,7 +63,7 @@ const Check_Booking: React.FC = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `https://venu-backend.vercel.app//api/v1/booking/get-booking`,
+          `https://venu-backend.vercel.app/api/v1/booking/get-booking`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ const Check_Booking: React.FC = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `https://venu-backend.vercel.app//api/v1/booking/update-booking/${selectedBooking._id}`,
+        `https://venu-backend.vercel.app/api/v1/booking/update-booking/${selectedBooking._id}`,
         { status },
         {
           headers: {
@@ -127,7 +127,7 @@ const Check_Booking: React.FC = () => {
     try {
       const token = localStorage.getItem("accessToken");
       await axios.delete(
-        `https://venu-backend.vercel.app//api/v1/booking/delete-booking/${id}`,
+        `https://venu-backend.vercel.app/api/v1/booking/delete-booking/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

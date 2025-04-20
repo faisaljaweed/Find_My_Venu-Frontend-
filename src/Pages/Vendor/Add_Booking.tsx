@@ -74,7 +74,7 @@ const Add_Booking = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `https://venu-backend.vercel.app//api/v1/property/get-product-bookings/${selectedProduct}`,
+          `https://venu-backend.vercel.app/api/v1/property/get-product-bookings/${selectedProduct}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
