@@ -27,6 +27,7 @@ import User_Details from "./Pages/Admin/User_Details";
 import Check_Booking_Details from "./Pages/Admin/Check_Booking_Details";
 import Check_Product_details from "./Pages/Admin/Check_Product_details";
 import Contact from "./Contact";
+import GlobalSearchPage from "./Pages/Client/Global_Search";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
           path="luxury-villa/:id/booking-update"
           element={<Booking_update />}
         />
+        <Route path="global-search" element={<GlobalSearchPage />} />
       </Route>
       {/* end Client Routes */}
       {/* Start Admin Routes */}
