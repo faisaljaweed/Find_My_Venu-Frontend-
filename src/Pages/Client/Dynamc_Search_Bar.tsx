@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../Components/api/Product_Api";
 import { Product } from "../../Components/Types/Product_types";
 import { useNavigate } from "react-router-dom";
-
+import { Search } from "lucide-react";
 const Dynamc_Search_Bar = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedType, setSelectedType] = useState<string>("");
@@ -47,21 +47,68 @@ const Dynamc_Search_Bar = () => {
   };
 
   return (
-    <div className="p-4 md:p-14">
+    // <div className="p-4 md:p-14">
+    //   <form
+    //     onSubmit={handleSubmit}
+    //     className="bg-white p-2 rounded-lg shadow-lg flex flex-col md:flex-row"
+    //   >
+    //     <div className="flex-shrink-0 p-2 grid md:grid-cols-3 gap-2">
+    //       <select
+    //         value={selectedType}
+    //         onChange={(e) => setSelectedType(e.target.value)}
+    //         className="py-3 px-4 rounded-md border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+    //       >
+    //         <option value="">Select Type</option>
+    //         <option value="farm house">Farm House</option>
+    //         <option value="hall">Hall</option>
+    //         <option value="banquet">Banquet</option>
+    //         <option value="villas">Villas</option>
+    //         <option value="murqee">Murqee</option>
+    //       </select>
+    //     </div>
+    //     <div className="flex-grow p-2 md:mr-2">
+    //       <div className="relative">
+    //         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+    //           <Search size={20} className="text-gray-400" />
+    //         </div>
+    //         <input
+    //           type="number"
+    //           min="1"
+    //           placeholder="Enter Guests"
+    //           value={guests}
+    //           onChange={(e) => setGuests(e.target.value)}
+    //           className="w-full pl-10 pr-4 py-3 rounded-md border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+    //         />
+    //       </div>
+    //     </div>
+
+    //     <div className="w-full md:w-auto">
+    //       <label className="block text-sm text-transparent mb-1">Search</label>
+    //       <button className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
+    //         Search
+    //       </button>
+    //     </div>
+    //   </form>
+
+    //   {/* Results Section */}
+    // </div>
+
+    <div className="p-4 md:p-10">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md flex flex-col md:flex-row items-center justify-between gap-4"
+        className="bg-white rounded-xl shadow-xl px-6 py-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
       >
+        {/* Type Selection */}
         <div className="w-full md:w-1/3">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block mb-1 text-sm font-medium text-gray-600">
             Select Type
           </label>
           <select
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full py-3 px-4 rounded-md border border-gray-300 focus:ring-amber-500 focus:border-amber-500"
           >
-            <option value="">Select Type</option>
+            <option value="">Choose</option>
             <option value="farm house">Farm House</option>
             <option value="hall">Hall</option>
             <option value="banquet">Banquet</option>
@@ -70,34 +117,72 @@ const Dynamc_Search_Bar = () => {
           </select>
         </div>
 
+        {/* Guest Input */}
         <div className="w-full md:w-1/3">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block mb-1 text-sm font-medium text-gray-600">
             Number of Guests
           </label>
-          <input
-            type="number"
-            min="1"
-            placeholder="Enter Guests"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search size={20} className="text-gray-400" />
+            </div>
+            <input
+              type="number"
+              min="1"
+              placeholder="Enter Guests"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 rounded-md border border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+            />
+          </div>
         </div>
 
+        {/* Search Button */}
         <div className="w-full md:w-auto">
-          <label className="block text-sm text-transparent mb-1">Search</label>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200"
-          >
+          <label className="block mb-1 text-sm text-transparent">Search</label>
+          <button className="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
             Search
           </button>
         </div>
       </form>
-
-      {/* Results Section */}
     </div>
   );
 };
 
 export default Dynamc_Search_Bar;
+{
+  /* <div className="bg-white p-2 rounded-lg shadow-lg flex flex-col md:flex-row">
+            <div className="flex-grow p-2 md:mr-2">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search size={20} className="text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search for location, property type, or features"
+                  className="w-full pl-10 pr-4 py-3 rounded-md border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex-shrink-0 p-2 grid md:grid-cols-3 gap-2">
+              <select className="py-3 px-4 rounded-md border-gray-300 focus:ring-amber-500 focus:border-amber-500">
+                <option value="">Property Type</option>
+                <option value="villa">Villa</option>
+                <option value="apartment">Apartment</option>
+                <option value="house">House</option>
+                <option value="penthouse">Penthouse</option>
+              </select>
+
+              <select className="py-3 px-4 rounded-md border-gray-300 focus:ring-amber-500 focus:border-amber-500">
+                <option value="">Status</option>
+                <option value="for-sale">For Sale</option>
+                <option value="for-rent">For Rent</option>
+              </select>
+
+              <button className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
+                Search
+              </button>
+            </div>
+          </div> */
+}

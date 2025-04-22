@@ -120,5 +120,4 @@ function Indoor() {
     </div>
   );
 }
-
 export default Indoor;

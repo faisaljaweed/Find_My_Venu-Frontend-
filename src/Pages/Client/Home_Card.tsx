@@ -3,10 +3,10 @@ import Home_all_product from "./Home_all_product";
 const Home_Card = () => {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold text-center">
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 font-serif mb-4">
         Best Farm House Venues in Karachi
       </h1>
-      <p className="text-center text-gray-600 mt-2">
+      <p className="text-center text-gray-600 max-w-3xl mx-auto leading-relaxed mb-10">
         For private or corporate functions alike, karachi offers some amazing
         farm_house venues for a birthday party, a business luncheon, a bridal
         shower or end of year celebration with your team. With catering provided

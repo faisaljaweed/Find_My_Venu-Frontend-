@@ -175,18 +175,45 @@ const Detail_all_product = () => {
     <div className="max-w-7xl mx-auto p-4">
       {product ? (
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* image large */}
-            <div className="flex mb-6">
+          <div className="relative w-full">
+            {/* Full Width Top Image with Overlay (optional) */}
+            <div className="relative w-full h-[400px] mb-6">
+              <img
+                src={product.pics[0]}
+                alt={product.name}
+                className="w-full h-full object-cover rounded-lg shadow-md cursor-pointer"
+                onClick={() => openImage(product.pics[0])}
+              />
+              {/* Optional Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/10 rounded-lg"></div>
+            </div>
+
+            {/* Thumbnail Images Below */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {product.pics.slice(1).map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Product image ${index + 1}`}
+                  className="w-full h-36 object-cover rounded-md shadow-sm cursor-pointer hover:scale-105 transition-transform duration-300"
+                  onClick={() => openImage(image)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
+          {/* image large */}
+          {/* <div className="flex mb-6">
               <img
                 src={product.pics[0]}
                 alt={product.name}
                 className="w-full max-w-xl h-auto rounded-lg shadow-lg"
                 onClick={() => openImage(product.pics[0])}
               />
-            </div>
-            {/* multiple images */}
-            <div className="grid grid-cols-3 gap-4 mb-6 mt-3">
+            </div> */}
+          {/* multiple images */}
+          {/* <div className="grid grid-cols-3 gap-4 mb-6 mt-3">
               {product.pics.slice(1).map((image, index) => (
                 <img
                   key={index}
@@ -197,7 +224,7 @@ const Detail_all_product = () => {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
           {/* Venu Name and address */}
           <div className="p-6">
             <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
