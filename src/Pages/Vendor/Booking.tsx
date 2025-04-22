@@ -108,7 +108,7 @@ const Booking_Detail: React.FC = () => {
 
           const token = localStorage.getItem("accessToken");
           const uploadResponse = await axios.post(
-            `"https://venu-backend.vercel.app/api/v1/upload"`, // Your image upload endpoint
+            `https://venu-backend.vercel.app/api/v1/upload`, // Your image upload endpoint
             form,
             {
               headers: {
@@ -145,21 +145,21 @@ const Booking_Detail: React.FC = () => {
   };
 
   // Modal ko open karne ka function, jisme selected product ki details set hoti hain
-  const openEditModal = (product: Product) => {
-    setSelectedProduct(product);
-    setFormData({
-      name: product.name,
-      description: product.description,
-      location: product.location,
-      type: product.type,
-      price: product.price.toString(),
-      seatedCapacity: product.seatedCapacity,
-      standingCapacity: product.standingCapacity,
-      size: product.size,
-      pics: product.pics,
-    });
-    setIsModalOpen(true);
-  };
+  // const openEditModal = (product: Product) => {
+  //   setSelectedProduct(product);
+  //   setFormData({
+  //     name: product.name,
+  //     description: product.description,
+  //     location: product.location,
+  //     type: product.type,
+  //     price: product.price.toString(),
+  //     seatedCapacity: product.seatedCapacity,
+  //     standingCapacity: product.standingCapacity,
+  //     size: product.size,
+  //     pics: product.pics,
+  //   });
+  //   setIsModalOpen(true);
+  // };
 
   // Modal ko close karne ka function
   const closeModal = () => {
