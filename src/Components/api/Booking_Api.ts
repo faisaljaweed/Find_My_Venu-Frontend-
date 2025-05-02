@@ -13,7 +13,7 @@ export const Bookig_add_api = async (
   try {
     const token = localStorage.getItem("accessToken");
     const response = await axios.post(
-      `https://venu-backend.vercel.app/api/v1/booking/add-booking`,
+      `http://localhost:3000/api/v1/booking/add-booking`,
       {
         bookingDate,
         productId,
@@ -50,7 +50,7 @@ export const Vendor_Bookig_add_api = async (
   try {
     const accessToken = localStorage.getItem("accessToken");
     const response = await axios.post(
-      `https://venu-backend.vercel.app/api/v1/booking/add-bookings`,
+      `http://localhost:3000/api/v1/booking/add-bookings`,
       {
         bookingDate,
         productId,
@@ -76,7 +76,7 @@ export const Bookig_update_api = async (id: string) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
     const response = await axios.put(
-      `https://venu-backend.vercel.app/api/v1/booking/update-booking${id}`,
+      `http://localhost:3000/api/v1/booking/update-booking${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -93,7 +93,7 @@ export const getSpecificBooking = async (id: string) => {
   try {
     const accessToken = localStorage.getItem("accessToken");
     const response = await axios.get(
-      `https://venu-backend.vercel.app/api/v1/booking/get-specific-booking/${id}`,
+      `http://localhost:3000/api/v1/booking/get-specific-booking/${id}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -110,7 +110,7 @@ export const getBooking = async () => {
   try {
     const token = localStorage.getItem("accessToken");
     const response = axios.get(
-      `https://venu-backend.vercel.app/api/v1/booking/get-all-booking`,
+      `http://localhost:3000/api/v1/booking/get-all-booking`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

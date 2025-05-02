@@ -2,6 +2,7 @@ import { useState } from "react";
 import { addProduct } from "../../Components/api/Product_Api";
 import Input from "../../Components/Input";
 import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
 // import { set } from "react-datepicker/dist/date_utils";
 
 const Add_Product = () => {
@@ -25,6 +26,7 @@ const Add_Product = () => {
     airConditioning: false,
   });
   const [, setFullScreenImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const handleFeatureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFeatures((prev) => ({
@@ -45,6 +47,7 @@ const Add_Product = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     setName("");
     setDescription("");
     setPrice("");
@@ -79,10 +82,12 @@ const Add_Product = () => {
         ?.then((res) => {
           console.log(res);
           toast.success("Product added successfully");
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
           toast.error("Failed to add product");
+          setLoading(false);
         });
     } else {
       console.log("At least one product picture is required");
@@ -104,6 +109,11 @@ const Add_Product = () => {
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Add Product
         </h2>
+        {loading && (
+          <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+            <Loader />
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-6">
             <div>

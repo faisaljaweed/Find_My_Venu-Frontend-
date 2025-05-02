@@ -4,6 +4,7 @@ import { Product } from "../../Components/Types/Product_types";
 import { Vendor_Bookig_add_api } from "../../Components/api/Booking_Api";
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import Loader from "../../Components/Loader";
 
 const Add_Booking = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,7 +19,7 @@ const Add_Booking = () => {
   const [totalGuest, settotalGuest] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   // Fetch all products when the component mounts
 
   const userString = localStorage.getItem("user");
@@ -50,7 +51,7 @@ const Add_Booking = () => {
   // Handle form submission
   const addBooking = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    setLoading(true);
     try {
       const res = await Vendor_Bookig_add_api(
         bookingDate,
@@ -63,9 +64,19 @@ const Add_Booking = () => {
         email
       );
       console.log("Booking response:", res);
+      setLoading(false);
+      setEmail("");
+      setMessage("");
+      setName("");
+      setStartDate(null);
+      setStartTime("");
+      setEndTime("");
+      settotalGuest("");
+
       // Optionally, add logic here to show a success message or clear the form
     } catch (err) {
       console.log("Error during booking:", err);
+      setLoading(false);
     }
   };
 
@@ -74,7 +85,7 @@ const Add_Booking = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `https://venu-backend.vercel.app/api/v1/property/get-product-bookings/${selectedProduct}`,
+          `http://localhost:3000/api/v1/property/get-product-bookings/${selectedProduct}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -96,10 +107,16 @@ const Add_Booking = () => {
 
   return (
     <>
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       <div className="max-w-[500px] mx-auto p-3 mt-5 border border-gray-300 rounded-md shadow-md">
         <h1 className="text-2xl font-bold text-center text-gray-900 mb-4">
           Add Booking
         </h1>
+
         <form className="space-y-4 mt-4 " onSubmit={addBooking}>
           <select
             className="w-full border-[1.5px] border-black rounded-lg p-2"

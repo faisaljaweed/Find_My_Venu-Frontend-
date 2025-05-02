@@ -8,6 +8,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import axios from "axios";
+import Loader from "../../Components/Loader";
 
 // Client aur Product ke details ke liye interfaces
 interface Client {
@@ -57,13 +58,14 @@ const Check_Booking: React.FC = () => {
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState("");
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("accessToken");
+        setLoading(true);
         const response = await axios.get(
-          `https://venu-backend.vercel.app/api/v1/booking/get-booking`,
+          `http://localhost:3000/api/v1/booking/get-booking`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -72,8 +74,10 @@ const Check_Booking: React.FC = () => {
         );
         console.log(response.data);
         setBookings(response.data.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetchData();
@@ -91,11 +95,11 @@ const Check_Booking: React.FC = () => {
 
   const handleUpdateStatus = async () => {
     if (!selectedBooking) return;
-
+    setLoading(true);
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `https://venu-backend.vercel.app/api/v1/booking/update-booking/${selectedBooking._id}`,
+        `http://localhost:3000/api/v1/booking/update-booking/${selectedBooking._id}`,
         { status },
         {
           headers: {
@@ -117,17 +121,20 @@ const Check_Booking: React.FC = () => {
         }
 
         setModalOpen(false); // Close the modal
+        setLoading(false);
       }
     } catch (error) {
       console.log("Error updating status:", error);
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("accessToken");
       await axios.delete(
-        `https://venu-backend.vercel.app/api/v1/booking/delete-booking/${id}`,
+        `http://localhost:3000/api/v1/booking/delete-booking/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -135,8 +142,10 @@ const Check_Booking: React.FC = () => {
         }
       );
       setBookings(bookings.filter((booking) => booking._id !== id));
+      setLoading(false);
     } catch (error) {
       console.log("Error deleting booking:", error);
+      setLoading(false);
     }
   };
 
@@ -146,6 +155,11 @@ const Check_Booking: React.FC = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Check Booking
         </h1>
+        {loading && (
+          <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+            <Loader />
+          </div>
+        )}
         <div className="bg-white shadow-md rounded-lg overflow-x-auto">
           <table className="min-w-full">
             <thead className="bg-gray-200">

@@ -57,9 +57,25 @@ function Indoor() {
   const [selectedFeature, setSelectedFeature] = useState<Feature>(features[0]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className=" bg-gray-100">
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8 items-start">
+          {/* Right Side - Image Display */}
+          <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
+            <img
+              src={selectedFeature.image}
+              alt={selectedFeature.title}
+              className="w-full h-full object-cover transition-opacity duration-300"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+              <h2 className="text-white text-2xl font-bold">
+                {selectedFeature.title}
+              </h2>
+              <p className="text-white/90 mt-2">
+                {selectedFeature.description}
+              </p>
+            </div>
+          </div>
           {/* Left Side - Feature List */}
           <div className="space-y-4">
             {features.map((feature) => (
@@ -97,23 +113,6 @@ function Indoor() {
                 </div>
               </button>
             ))}
-          </div>
-
-          {/* Right Side - Image Display */}
-          <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl">
-            <img
-              src={selectedFeature.image}
-              alt={selectedFeature.title}
-              className="w-full h-full object-cover transition-opacity duration-300"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
-              <h2 className="text-white text-2xl font-bold">
-                {selectedFeature.title}
-              </h2>
-              <p className="text-white/90 mt-2">
-                {selectedFeature.description}
-              </p>
-            </div>
           </div>
         </div>
       </div>

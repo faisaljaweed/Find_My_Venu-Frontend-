@@ -6,19 +6,20 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Login_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../Components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setEmail("");
     setPassword("");
-
+    setLoading(true);
     Login_api({ email, password })
       .then((res) => {
         // console.log(res);
@@ -65,12 +66,21 @@ const Login = () => {
           navigate("/login");
           toast.error("Invalid Credentials");
         }
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-16 rounded-lg shadow-md w-full max-w-md relative"

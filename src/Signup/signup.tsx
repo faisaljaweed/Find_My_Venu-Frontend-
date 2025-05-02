@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Signup_api } from "../Components/api/User_Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../Components/Loader";
 
 const Signup = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const Signup = () => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
-
+    setLoading(true);
     const userData = {
       username,
       email,
@@ -27,7 +28,7 @@ const Signup = () => {
       .then((res) => {
         const emailToken = res?.data?.data?.loggedInUser.emailToken;
         console.log(`Email Token is ${emailToken}`);
-
+        setLoading(false);
         console.log(res);
         if (res?.status === 200) {
           navigate(`/verify-email/${emailToken}`, {
@@ -39,11 +40,17 @@ const Signup = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         toast.error("Signup Failed");
       });
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"

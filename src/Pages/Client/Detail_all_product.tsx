@@ -20,6 +20,8 @@ import {
   Music,
   Camera,
 } from "lucide-react";
+
+import Loader from "../../Components/Loader";
 const Detail_all_product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
@@ -39,6 +41,7 @@ const Detail_all_product = () => {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const [lodaing, setLoading] = useState(false);
   // Function to open the image in full screen
 
   // Gallery Image
@@ -59,7 +62,7 @@ const Detail_all_product = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `https://venu-backend.vercel.app/api/v1/property/get-product-bookings/${id}`,
+          `http://localhost:3000/api/v1/property/get-product-bookings/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,7 +87,7 @@ const Detail_all_product = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "https://venu-backend.vercel.app/api/v1/booking/get-user-booking",
+          "http://localhost:3000/api/v1/booking/get-user-booking",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -116,20 +119,24 @@ const Detail_all_product = () => {
   }, [id]);
 
   useEffect(() => {
+    setLoading(true);
     if (id) {
       getDetailProduct(id)
         .then((res) => {
+          setLoading(false);
           setProduct(res?.data.data);
           console.log(res?.data.data);
         })
         .catch((err) => {
           console.log("Something went wrong", err);
+          setLoading(false);
         });
     }
   }, [id]);
 
   const addBooking = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     if (startDate && id) {
       const bookingDate = startDate.toISOString();
       Bookig_add_api(
@@ -146,12 +153,14 @@ const Detail_all_product = () => {
           console.log(res);
           if (res && res.status === 200) {
             toast.success("Booking request sent successfully!");
+            setLoading(false);
           } else {
             toast.error("Please login to book this product.");
           }
         })
         .catch((err) => {
           console.log(err);
+          setLoading(false);
         });
     } else {
       console.log(
@@ -173,6 +182,11 @@ const Detail_all_product = () => {
   }, []);
   return (
     <div className="max-w-7xl mx-auto p-4">
+      {lodaing && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       {product ? (
         <div>
           <div className="relative w-full">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Loader from "../../Components/Loader";
 
 // Product interface define karte hain
 interface Product {
@@ -18,7 +19,7 @@ interface Product {
 
 const Booking_Detail: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   // Modal state aur selected product state
@@ -62,9 +63,10 @@ const Booking_Detail: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "https://venu-backend.vercel.app/api/v1/property/get-product",
+          "http://localhost:3000/api/v1/property/get-product",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -108,7 +110,7 @@ const Booking_Detail: React.FC = () => {
 
           const token = localStorage.getItem("accessToken");
           const uploadResponse = await axios.post(
-            `https://venu-backend.vercel.app/api/v1/upload`, // Your image upload endpoint
+            `http://localhost:3000/api/v1/upload`, // Your image upload endpoint
             form,
             {
               headers: {
@@ -187,7 +189,7 @@ const Booking_Detail: React.FC = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `https://venu-backend.vercel.app/api/v1/property/edit-product/${selectedProduct._id}`,
+        `http://localhost:3000/api/v1/property/edit-product/${selectedProduct._id}`,
         {
           name: formData.name,
           description: formData.description,
@@ -236,90 +238,88 @@ const Booking_Detail: React.FC = () => {
     }));
   };
 
-  if (loading) return <div>Loading products...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Heading */}
       <h1 className="text-3xl font-bold text-center mb-8">All Products</h1>
-
       {/* Agar koi product na ho */}
-      {products.length === 0 ? (
-        <p className="text-center text-gray-500">No Product</p>
-      ) : (
-        // Grid layout for products
-        <div
-          className={`grid ${
-            products.length === 1
-              ? "grid-cols-1"
-              : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          } gap-6`}
-        >
-          {products.map((product) => (
-            <div
-              key={product._id}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
-            >
-              {/* Product image */}
-              <img
-                src={product.pics[0]}
-                alt={product.name}
-                className="w-full h-48 object-cover"
-                onClick={() => openImage(product.pics[0])}
-              />
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
 
-              <div className="grid grid-cols-3 gap-4 mb-6 mt-3">
-                {product.pics.slice(1).map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Product image ${index + 1}`}
-                    className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
-                    onClick={() => openImage(image)}
-                  />
-                ))}
-              </div>
-              {/* Product details */}
-              <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                <p className="text-gray-600 mb-2">
-                  {expandedDescriptions[product._id]
-                    ? product.description
-                    : `${product.description.substring(0, 100)}...`}
-                  {product.description.length > 100 && (
-                    <button
-                      onClick={() => toggleDescription(product._id)}
-                      className="text-blue-500 ml-2"
-                    >
-                      {expandedDescriptions[product._id]
-                        ? "See Less"
-                        : "See More"}
-                    </button>
-                  )}
-                </p>
-                <p className="text-gray-800 mb-1">
-                  <strong>Price:</strong> {product.price}
-                </p>
-                <p className="text-gray-800 mb-1">{product.type}</p>
-                <p className="text-gray-800 mb-1">{product.location}</p>
-                <p className="text-gray-800 mb-1">{product.size}</p>
-                <p className="text-gray-800 mb-1">{product.seatedCapacity}</p>
-                <p className="text-gray-800 mb-1">{product.standingCapacity}</p>
+      <div
+        className={`grid ${
+          products.length === 1
+            ? "grid-cols-1"
+            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        } gap-6`}
+      >
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="bg-white shadow-md rounded-lg overflow-hidden"
+          >
+            {/* Product image */}
+            <img
+              src={product.pics[0]}
+              alt={product.name}
+              className="w-full h-48 object-cover"
+              onClick={() => openImage(product.pics[0])}
+            />
 
-                {/* Edit button jo modal open karega */}
-                {/* <button
+            <div className="grid grid-cols-3 gap-4 mb-6 mt-3">
+              {product.pics.slice(1).map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Product image ${index + 1}`}
+                  className="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer"
+                  onClick={() => openImage(image)}
+                />
+              ))}
+            </div>
+            {/* Product details */}
+            <div className="p-4">
+              <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
+              <p className="text-gray-600 mb-2">
+                {expandedDescriptions[product._id]
+                  ? product.description
+                  : `${product.description.substring(0, 100)}...`}
+                {product.description.length > 100 && (
+                  <button
+                    onClick={() => toggleDescription(product._id)}
+                    className="text-blue-500 ml-2"
+                  >
+                    {expandedDescriptions[product._id]
+                      ? "See Less"
+                      : "See More"}
+                  </button>
+                )}
+              </p>
+              <p className="text-gray-800 mb-1">
+                <strong>Price:</strong> {product.price}
+              </p>
+              <p className="text-gray-800 mb-1">{product.type}</p>
+              <p className="text-gray-800 mb-1">{product.location}</p>
+              <p className="text-gray-800 mb-1">{product.size}</p>
+              <p className="text-gray-800 mb-1">{product.seatedCapacity}</p>
+              <p className="text-gray-800 mb-1">{product.standingCapacity}</p>
+
+              {/* Edit button jo modal open karega */}
+              {/* <button
                   onClick={() => openEditModal(product)}
                   className="mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                 >
                   Edit
                 </button> */}
-              </div>
             </div>
-          ))}
-        </div>
-      )}
-
+          </div>
+        ))}
+      </div>
       {/* Modal for editing product */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -476,7 +476,6 @@ const Booking_Detail: React.FC = () => {
           </div>
         </div>
       )}
-
       {isImageOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
           <img

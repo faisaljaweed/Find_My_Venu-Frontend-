@@ -1,79 +1,14 @@
-// import { useEffect, useState } from "react";
-// import Logo from "./Logo";
-// import Button from "./Button";
-// import { useNavigate } from "react-router-dom";
-// import Logout from "../Logout/logout";
-// import "./Header.css";
-
-// const Header = () => {
-//   const [isLogin, setLogin] = useState(true);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("accessToken");
-//     setLogin(!!token);
-//   }, []);
-
-//   const handleLogin = () => {
-//     setLogin(true);
-//     navigate("/login");
-//   };
-
-//   const handleLogout = () => {
-//     setLogin(false);
-//     navigate("/login");
-//   };
-
-//   return (
-//     <div
-//       className="flex flex-col md:flex-row justify-between items-center px-6 md:px-20 py-4 font-bold bg-transparent"
-//       id="header"
-//     >
-//       {/* Logo Section */}
-//       <main className="mb-4 md:mb-0">
-//         <Logo />
-//       </main>
-
-//       {/* Navigation and Buttons */}
-//       <main className="flex flex-col md:flex-row items-center gap-4">
-//         <Button
-//           className="bg-[#4b1011] w-full md:w-auto"
-//           onClick={() => navigate("/contact")}
-//         >
-//           <span className="text-white font-bold font-Playfair Display">
-//             Contact
-//           </span>
-//         </Button>
-
-//         {isLogin ? (
-//           <span onClick={handleLogout} className="w-full md:w-auto">
-//             <Logout />
-//           </span>
-//         ) : (
-//           <Button
-//             className="bg-[#4b1011] w-full md:w-auto"
-//             onClick={handleLogin}
-//           >
-//             <span className="text-white font-bold font-Playfair Display">
-//               Login
-//             </span>
-//           </Button>
-//         )}
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default Header;
 import React, { useState, useEffect } from "react";
 import { Menu, X, Heart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { LogOut_api } from "./api/User_Api";
+import Loader from "./Loader";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLogin, setLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,6 +22,7 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
+    setLoading(true);
     LogOut_api()
       .then((res) => {
         console.log(res);
@@ -94,8 +30,12 @@ const Header: React.FC = () => {
         localStorage.removeItem("refreshToken");
         navigate("/login");
         setLogin(false);
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -124,6 +64,11 @@ const Header: React.FC = () => {
 
   return (
     <>
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       <header className={headerClasses}>
         <div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-36">
           <div className="flex items-center justify-between">

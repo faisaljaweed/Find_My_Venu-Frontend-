@@ -1,30 +1,5 @@
-// import "react-datepicker/dist/react-datepicker.css";
-// import bg from "../../images/01.jpg";
-// import Dynamc_Search_Bar from "./Dynamc_Search_Bar";
-
-// const Home_Header = () => {
-//   return (
-//     <div
-//       className=" bg-cover bg-center bg-gray-100 min-h-screen p-6"
-//       style={{ backgroundImage: `url(${bg}) ` }}
-//     >
-//       {/* <Header /> */}
-//       {/* Header */}
-//       <div className="text-center mb-8 mt-32">
-//         <h1 className="text-4xl md:text-7xl font-bold text-[#555555]">
-//           Restaurant Venues in Karachi
-//         </h1>
-//       </div>
-
-//       {/* Search Bar */}
-//       <Dynamc_Search_Bar />
-//     </div>
-//   );
-// };
-
-// export default Home_Header;
 import React from "react";
-
+import CountUp from "react-countup";
 import Dynamc_Search_Bar from "./Dynamc_Search_Bar";
 
 const Home_Header: React.FC = () => {
@@ -63,25 +38,25 @@ const Home_Header: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 py-4 border-t border-white/20">
             <div className="text-center p-4">
               <p className="text-amber-400 text-2xl md:text-3xl font-bold">
-                1,250+
+                <CountUp end={700} duration={2} separator="," />+
               </p>
               <p className="text-white text-sm">Properties</p>
             </div>
             <div className="text-center p-4">
               <p className="text-amber-400 text-2xl md:text-3xl font-bold">
-                700+
+                <CountUp end={35} duration={2} />+
               </p>
               <p className="text-white text-sm">Happy Clients</p>
             </div>
             <div className="text-center p-4">
               <p className="text-amber-400 text-2xl md:text-3xl font-bold">
-                35+
+                <CountUp end={35} duration={2} />+
               </p>
               <p className="text-white text-sm">Countries</p>
             </div>
             <div className="text-center p-4">
               <p className="text-amber-400 text-2xl md:text-3xl font-bold">
-                12+
+                <CountUp end={35} duration={1} />+
               </p>
               <p className="text-white text-sm">Years Experience</p>
             </div>

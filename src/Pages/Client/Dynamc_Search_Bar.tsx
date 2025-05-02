@@ -3,13 +3,14 @@ import { getAllProducts } from "../../Components/api/Product_Api";
 import { Product } from "../../Components/Types/Product_types";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import Loader from "../../Components/Loader";
 const Dynamc_Search_Bar = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [guests, setGuests] = useState<string>("");
   const [, setFilteredProducts] = useState<Product[]>([]);
   const [, setHasSearched] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     getAllProducts()
@@ -25,7 +26,7 @@ const Dynamc_Search_Bar = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setHasSearched(true);
-
+    setLoading(true);
     let results = [...products];
 
     if (selectedType) {
@@ -94,6 +95,11 @@ const Dynamc_Search_Bar = () => {
     // </div>
 
     <div className="p-4 md:p-10">
+      {loading && (
+        <div className="z-20 fixed w-screen h-screen flex items-center justify-center bg-black/75">
+          <Loader />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-xl shadow-xl px-6 py-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
