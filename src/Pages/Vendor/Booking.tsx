@@ -66,7 +66,7 @@ const Booking_Detail: React.FC = () => {
         setLoading(true);
         const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          "http://localhost:3000/api/v1/property/get-product",
+          "https://venu-backend.vercel.app/api/v1/property/get-product",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ const Booking_Detail: React.FC = () => {
 
           const token = localStorage.getItem("accessToken");
           const uploadResponse = await axios.post(
-            `http://localhost:3000/api/v1/upload`, // Your image upload endpoint
+            `https://venu-backend.vercel.app/api/v1/upload`, // Your image upload endpoint
             form,
             {
               headers: {
@@ -189,7 +189,7 @@ const Booking_Detail: React.FC = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.put(
-        `http://localhost:3000/api/v1/property/edit-product/${selectedProduct._id}`,
+        `https://venu-backend.vercel.app/api/v1/property/edit-product/${selectedProduct._id}`,
         {
           name: formData.name,
           description: formData.description,
