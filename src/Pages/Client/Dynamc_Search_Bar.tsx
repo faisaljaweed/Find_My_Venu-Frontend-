@@ -139,6 +139,7 @@ const Dynamc_Search_Bar = () => {
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-md border border-gray-300 focus:ring-amber-500 focus:border-amber-500"
+              required
             />
           </div>
         </div>
@@ -146,7 +147,7 @@ const Dynamc_Search_Bar = () => {
         {/* Search Button */}
         <div className="w-full md:w-auto">
           <label className="block mb-1 text-sm text-transparent">Search</label>
-          <button className="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
+          <button className="w-full bg-[#d97706] hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
             Search
           </button>
         </div>

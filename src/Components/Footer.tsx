@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Home
                 </a>
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Properties
                 </a>
@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Services
                 </a>
@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   About Us
                 </a>
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Contact
                 </a>
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Luxury Villas
                 </a>
@@ -132,7 +132,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Penthouses
                 </a>
@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Beachfront Homes
                 </a>
@@ -148,7 +148,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Vacation Rentals
                 </a>
@@ -156,7 +156,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-gray-400 hover:text-[#d97706] transition-colors text-sm"
                 >
                   Commercial Property
                 </a>
@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
               <li className="flex items-start">
                 <MapPin
                   size={18}
-                  className="mr-2 text-amber-400 flex-shrink-0 mt-0.5"
+                  className="mr-2 text-[#d97706] flex-shrink-0 mt-0.5"
                 />
                 <span className="text-sm">
                   1234 Luxury Lane, Beverly Hills, CA 90210
@@ -180,12 +180,12 @@ const Footer: React.FC = () => {
               <li className="flex items-center">
                 <Phone
                   size={18}
-                  className="mr-2 text-amber-400 flex-shrink-0"
+                  className="mr-2 text-[#d97706] flex-shrink-0"
                 />
                 <span className="text-sm">+1 (800) 123-4567</span>
               </li>
               <li className="flex items-center">
-                <Mail size={18} className="mr-2 text-amber-400 flex-shrink-0" />
+                <Mail size={18} className="mr-2 text-[#d97706] flex-shrink-0" />
                 <span className="text-sm">info@luxestates.com</span>
               </li>
             </ul>

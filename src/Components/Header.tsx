@@ -53,14 +53,14 @@ const Header: React.FC = () => {
   };
 
   const headerClasses = `fixed w-full z-50 transition-all duration-300 ${
-    isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"
+    isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5 "
   }`;
 
   const textColorClass = isScrolled ? "text-gray-900" : "text-white";
   const logoClass = isScrolled ? "text-gray-900" : "text-gray-900";
   const buttonClass = isScrolled
     ? "bg-amber-600 hover:bg-amber-700 text-white"
-    : "bg-white hover:bg-gray-100 text-gray-900";
+    : "bg-amber-600 hover:bg-gray-100 text-white shadow-md";
 
   return (
     <>
@@ -141,7 +141,7 @@ const Header: React.FC = () => {
         >
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-4 border-b">
-              <span className="text-lg font-bold">Menu</span>
+              <span className="text-lg font-bold"></span>
               <button
                 onClick={toggleMobileMenu}
                 className="p-2 rounded-md text-gray-500 hover:text-gray-700"
